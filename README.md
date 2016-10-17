@@ -14,3 +14,9 @@
 如今自己要新写图表时，发现难以下手，于是想了解MPAndroidChart是如何设计的，所以就决定进行一次彻底的源码分析。
 
 -- 记于2016年10月17日
+
+## 微信公众号
+![二维码](https://github.com/zhuanghongji/MPAndroidChart/blob/master/image/AndroidHub_qrcode.jpg?raw=true)
+
+名称：AndroidHub<br/>
+简介：A place for Android developers everywhere to meet, share and discuss the latest on Android development .
