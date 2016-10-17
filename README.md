@@ -1,31 +1,16 @@
-# MPAndroidChart
-MPAndroidChart 图表库的API练习
+# MPAndroidChart 官方文档翻译和源码分析
+官方指的是 [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart) 这个库，MPAndroidChart是一个非常强大的、容易使用的图表库。
 
-文章索引：
-[MPAndroidChart 教程：概述 ](http://blog.csdn.net/u014136472/article/details/50273309)
+这个仓库主要分为三个部分：
+1. 官方文档翻译
+2. 官方源码分析
+3. MPAndroidChart-Samples
 
-[MPAndroidChart 教程：开始 Getting Started（一） ](http://blog.csdn.net/u014136472/article/details/50293767)
+## 初衷
+2015年发现和学习MPAndroidChart时，边学习边翻译了官方Wiki，后来毕业后很长时间都没有继续用到这个库。工作后因为业务需要的特殊性，即使接触到一些图表功能开发也没有使用这个库，大多数时候都是自定义View来实现业务需求的图表功能。这并不意味着MPAndroidChart的扩展性不好，而是因为历史原因，继续使用自定义view开发更加方便快捷。
 
-[MPAndroidChart 教程：与图表进行手势交互 Interaction with the Chart（二）](http://blog.csdn.net/u014136472/article/details/50297181)
+随着业务的发展，发现在原有自定义View上做改动实现新功能是比较困难的。前人在自定义View时封装性做得不够好、可扩展性相对较差（因为无法预料到业务的发展，也无需做到很好的扩展性）。
 
-[MPAndroidChart 教程：坐标轴，X轴，Y轴，Labels（三）](http://blog.csdn.net/u014136472/article/details/50298213)
+如今自己要新写图表时，发现难以下手，于是想了解MPAndroidChart是如何设计的，所以就决定进行一次彻底的源码分析。
 
-[MPAndroidChart 教程：设置数据，设置颜色（四）](http://blog.csdn.net/u014136472/article/details/50310429)
-
-[MPAndroidChart 教程：数据格式器 ValueFormatter（五）](http://blog.csdn.net/u014136472/article/details/50315475)
-
-[MPAndroidChart 教程：图表的具体设置 Specific chart settings（六）](http://blog.csdn.net/u014136472/article/details/50333829)
-
-[MPAndroidchart 教程：图例 Legend（七） ](http://blog.csdn.net/u014136472/article/details/50382292)
-
-[MPAndroidChart 教程：动态和实时数据 Dynamic & Realtime Data（八）](http://blog.csdn.net/u014136472/article/details/50383454)
-
-[MPAndroidChart 教程：修改视窗 Modifying the Viewport（九） ](http://blog.csdn.net/u014136472/article/details/50382971)
-
-[MPAndroidChart 教程：动画 Animations（十）](http://blog.csdn.net/u014136472/article/details/50381639)
-
-[MPAndroidChart 教程：MarkerView（十一） ](http://blog.csdn.net/u014136472/article/details/50383511)
-
-[MPAndroidChart 教程：ChartData类，ChartData子类， DataSet类，DataSet子类（十二）](http://blog.csdn.net/u014136472/article/details/50434006)
-
-时间仓促，难免有错误，有的话希望大家在评论中指出，谢谢。
+-- 记于2016年10月17日
