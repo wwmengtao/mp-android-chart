@@ -22,9 +22,6 @@ public class ScrollViewActivity extends DemoBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_scrollview);
 
         mChart = (BarChart) findViewById(R.id.chart1);
 
@@ -47,7 +44,12 @@ public class ScrollViewActivity extends DemoBase {
         setData(10);
         mChart.setFitBars(true);
     }
-    
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_scrollview;
+    }
+
     private void setData(int count) {
         
         ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();

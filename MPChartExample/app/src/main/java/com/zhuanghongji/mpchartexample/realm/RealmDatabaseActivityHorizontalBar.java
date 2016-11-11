@@ -27,15 +27,17 @@ public class RealmDatabaseActivityHorizontalBar extends RealmBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_horizontalbarchart_noseekbar);
 
         mChart = (HorizontalBarChart) findViewById(R.id.chart1);
         setup(mChart);
 
         mChart.getAxisLeft().setAxisMinimum(0f);
         mChart.setDrawValueAboveBar(false);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_horizontalbarchart_noseekbar;
     }
 
     @Override

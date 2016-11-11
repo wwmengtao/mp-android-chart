@@ -26,9 +26,6 @@ public class RealmDatabaseActivityRadar extends RealmBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_radarchart_noseekbar);
 
         mChart = (RadarChart) findViewById(R.id.chart1);
         setup(mChart);
@@ -38,6 +35,11 @@ public class RealmDatabaseActivityRadar extends RealmBaseActivity {
         mChart.setWebAlpha(180);
         mChart.setWebColorInner(Color.DKGRAY);
         mChart.setWebColor(Color.GRAY);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_radarchart_noseekbar;
     }
 
     @Override

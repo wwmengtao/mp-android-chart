@@ -26,9 +26,6 @@ public class PerformanceLineChart extends DemoBase implements OnSeekBarChangeLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_performance_linechart);
 
         mTvCount = (TextView) findViewById(R.id.tvValueCount);
         mSeekBarValues = (SeekBar) findViewById(R.id.seekbarValues);
@@ -61,6 +58,11 @@ public class PerformanceLineChart extends DemoBase implements OnSeekBarChangeLis
 
         // dont forget to refresh the drawing
         mChart.invalidate();
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_performance_linechart;
     }
 
     @Override

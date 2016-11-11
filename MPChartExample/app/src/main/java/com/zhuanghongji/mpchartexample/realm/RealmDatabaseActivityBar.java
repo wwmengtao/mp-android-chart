@@ -26,12 +26,14 @@ public class RealmDatabaseActivityBar extends RealmBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_barchart_noseekbar);
 
         mChart = (BarChart) findViewById(R.id.chart1);
         setup(mChart);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_barchart_noseekbar;
     }
 
     @Override

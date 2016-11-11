@@ -32,9 +32,6 @@ public class AnotherBarActivity extends DemoBase implements OnSeekBarChangeListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_barchart);
 
         tvX = (TextView) findViewById(R.id.tvXMax);
         tvY = (TextView) findViewById(R.id.tvYMax);
@@ -73,6 +70,11 @@ public class AnotherBarActivity extends DemoBase implements OnSeekBarChangeListe
         mChart.animateY(2500);
         
         mChart.getLegend().setEnabled(false);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_barchart;
     }
 
     @Override

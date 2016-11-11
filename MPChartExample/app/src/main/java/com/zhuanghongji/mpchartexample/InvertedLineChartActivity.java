@@ -40,9 +40,6 @@ public class InvertedLineChartActivity extends DemoBase implements OnSeekBarChan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_linechart);
 
         tvX = (TextView) findViewById(R.id.tvXMax);
         tvY = (TextView) findViewById(R.id.tvYMax);
@@ -110,6 +107,11 @@ public class InvertedLineChartActivity extends DemoBase implements OnSeekBarChan
 
         // dont forget to refresh the drawing
         mChart.invalidate();
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_linechart;
     }
 
     @Override

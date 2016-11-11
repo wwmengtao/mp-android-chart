@@ -40,9 +40,6 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_barchart);
 
         tvX = (TextView) findViewById(R.id.tvXMax);
         tvY = (TextView) findViewById(R.id.tvYMax);
@@ -109,6 +106,11 @@ public class BarChartActivityMultiDataset extends DemoBase implements OnSeekBarC
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
         mChart.getAxisRight().setEnabled(false);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_barchart;
     }
 
     @Override

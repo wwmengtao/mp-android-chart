@@ -40,9 +40,6 @@ public class LineChartTime extends DemoBase implements OnSeekBarChangeListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_linechart_time);
 
         tvX = (TextView) findViewById(R.id.tvXMax);
         mSeekBarX = (SeekBar) findViewById(R.id.seekBar1);
@@ -119,6 +116,11 @@ public class LineChartTime extends DemoBase implements OnSeekBarChangeListener {
 
         YAxis rightAxis = mChart.getAxisRight();
         rightAxis.setEnabled(false);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_linechart_time;
     }
 
     @Override

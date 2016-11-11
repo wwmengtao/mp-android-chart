@@ -1,14 +1,12 @@
 
 package com.zhuanghongji.mpchartexample.notimportant;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -50,21 +48,24 @@ import com.zhuanghongji.mpchartexample.realm.RealmMainActivity;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity implements OnItemClickListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends BaseActivity implements OnItemClickListener {
+
+    @BindView(R.id.listView1)
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
-
-        setTitle("MPAndroidChart Example");
+        initToolbar();
+        mToolbar.setTitle("MPAndroidChart Example");
 
         // initialize the utilities
         Utils.init(this);
 
-        ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
+        ArrayList<ContentItem> objects = new ArrayList<>();
 
         objects.add(new ContentItem("Line Chart", "A simple demonstration of the linechart."));
         objects.add(new ContentItem("Line Chart (Dual YAxis)",
@@ -150,10 +151,14 @@ public class MainActivity extends Activity implements OnItemClickListener {
 
         MyAdapter adapter = new MyAdapter(this, objects);
 
-        ListView lv = (ListView) findViewById(R.id.listView1);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(this);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_main;
     }
 
     @Override

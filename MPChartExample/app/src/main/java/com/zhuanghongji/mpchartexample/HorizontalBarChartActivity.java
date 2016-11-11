@@ -41,9 +41,6 @@ public class HorizontalBarChartActivity extends DemoBase implements OnSeekBarCha
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_horizontalbarchart);
 
         tvX = (TextView) findViewById(R.id.tvXMax);
         tvY = (TextView) findViewById(R.id.tvYMax);
@@ -112,6 +109,11 @@ public class HorizontalBarChartActivity extends DemoBase implements OnSeekBarCha
         l.setDrawInside(false);
         l.setFormSize(8f);
         l.setXEntrySpace(4f);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_horizontalbarchart;
     }
 
     @Override

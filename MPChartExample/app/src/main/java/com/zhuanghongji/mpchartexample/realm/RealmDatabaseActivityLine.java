@@ -26,9 +26,6 @@ public class RealmDatabaseActivityLine extends RealmBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_linechart_noseekbar);
 
         mChart = (LineChart) findViewById(R.id.chart1);
         setup(mChart);
@@ -37,6 +34,11 @@ public class RealmDatabaseActivityLine extends RealmBaseActivity {
         mChart.getAxisLeft().setAxisMinimum(0f);
         mChart.getAxisLeft().setDrawGridLines(false);
         mChart.getXAxis().setDrawGridLines(false);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_linechart_noseekbar;
     }
 
     @Override

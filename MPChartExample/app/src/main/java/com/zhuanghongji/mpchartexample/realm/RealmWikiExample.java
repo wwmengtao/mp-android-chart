@@ -33,9 +33,6 @@ public class RealmWikiExample extends RealmBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_realm_wiki);
 
         lineChart = (LineChart) findViewById(R.id.lineChart);
         barChart = (BarChart) findViewById(R.id.barChart);
@@ -53,6 +50,11 @@ public class RealmWikiExample extends RealmBaseActivity {
         barChart.getXAxis().setDrawGridLines(false);
         barChart.getXAxis().setLabelCount(5);
         barChart.getXAxis().setGranularity(1f);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_realm_wiki;
     }
 
     @Override

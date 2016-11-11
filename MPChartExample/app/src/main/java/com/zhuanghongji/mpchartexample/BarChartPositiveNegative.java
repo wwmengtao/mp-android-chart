@@ -32,9 +32,6 @@ public class BarChartPositiveNegative extends DemoBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_barchart_noseekbar);
 
         mTf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
         mChart = (BarChart) findViewById(R.id.chart1);
@@ -98,6 +95,11 @@ public class BarChartPositiveNegative extends DemoBase {
         });
 
         setData(data);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_barchart_noseekbar;
     }
 
     private void setData(List<Data> dataList) {

@@ -41,10 +41,7 @@ public class ListViewMultiChartActivity extends DemoBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_listview_chart);
-        
+
         ListView lv = (ListView) findViewById(R.id.listView1);
 
         ArrayList<ChartItem> list = new ArrayList<ChartItem>();
@@ -63,6 +60,11 @@ public class ListViewMultiChartActivity extends DemoBase {
 
         ChartDataAdapter cda = new ChartDataAdapter(getApplicationContext(), list);
         lv.setAdapter(cda);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_listview_chart;
     }
 
     /** adapter that supports 3 different item types */

@@ -26,9 +26,6 @@ public class RealmDatabaseActivityBubble extends RealmBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_bubblechart_noseekbar);
 
         mChart = (BubbleChart) findViewById(R.id.chart1);
         setup(mChart);
@@ -36,6 +33,11 @@ public class RealmDatabaseActivityBubble extends RealmBaseActivity {
         mChart.getXAxis().setDrawGridLines(false);
         mChart.getAxisLeft().setDrawGridLines(false);
         mChart.setPinchZoom(true);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_bubblechart_noseekbar;
     }
 
     @Override

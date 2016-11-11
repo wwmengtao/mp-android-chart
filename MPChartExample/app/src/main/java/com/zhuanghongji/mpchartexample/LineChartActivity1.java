@@ -40,6 +40,8 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.zhuanghongji.mpchartexample.R.layout.activity_linechart;
+
 public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListener,
         OnChartGestureListener, OnChartValueSelectedListener {
 
@@ -50,9 +52,7 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_linechart);
+        initToolbar();
 
         tvX = (TextView) findViewById(R.id.tvXMax);
         tvY = (TextView) findViewById(R.id.tvYMax);
@@ -160,6 +160,11 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
 
         // // dont forget to refresh the drawing
         // mChart.invalidate();
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_linechart;
     }
 
     @Override

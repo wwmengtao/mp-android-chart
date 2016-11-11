@@ -39,9 +39,6 @@ public class DrawChartActivity extends DemoBase implements OnChartValueSelectedL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_draw_chart);
 
         mChart = (LineChart) findViewById(R.id.chart1);
 
@@ -71,6 +68,11 @@ public class DrawChartActivity extends DemoBase implements OnChartValueSelectedL
         // mChart.setYRange(-40f, 40f, true);
         // call this to reset the changed y-range
         // mChart.resetYRange(true);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_draw_chart;
     }
 
     private void initWithDummyData() {

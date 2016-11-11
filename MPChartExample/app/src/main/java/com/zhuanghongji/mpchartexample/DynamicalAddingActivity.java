@@ -28,9 +28,6 @@ public class DynamicalAddingActivity extends DemoBase implements OnChartValueSel
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_linechart_noseekbar);
 
         mChart = (LineChart) findViewById(R.id.chart1);
         mChart.setOnChartValueSelectedListener(this);
@@ -43,6 +40,11 @@ public class DynamicalAddingActivity extends DemoBase implements OnChartValueSel
 //        mChart.getXAxis().setDrawGridLines(false);
 
         mChart.invalidate();
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_linechart_noseekbar;
     }
 
     int[] mColors = ColorTemplate.VORDIPLOM_COLORS;

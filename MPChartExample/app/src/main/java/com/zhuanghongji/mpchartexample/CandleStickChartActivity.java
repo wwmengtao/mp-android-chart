@@ -34,9 +34,6 @@ public class CandleStickChartActivity extends DemoBase implements OnSeekBarChang
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_candlechart);
 
         tvX = (TextView) findViewById(R.id.tvXMax);
         tvY = (TextView) findViewById(R.id.tvYMax);
@@ -80,6 +77,11 @@ public class CandleStickChartActivity extends DemoBase implements OnSeekBarChang
         mSeekBarY.setProgress(100);
         
         mChart.getLegend().setEnabled(false);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_candlechart;
     }
 
     @Override

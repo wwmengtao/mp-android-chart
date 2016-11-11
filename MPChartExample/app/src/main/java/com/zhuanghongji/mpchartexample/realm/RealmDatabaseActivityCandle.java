@@ -27,15 +27,17 @@ public class RealmDatabaseActivityCandle extends RealmBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_candlechart_noseekbar);
 
         mChart = (CandleStickChart) findViewById(R.id.chart1);
         setup(mChart);
 
         mChart.getAxisLeft().setDrawGridLines(false);
         mChart.getXAxis().setDrawGridLines(false);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_candlechart_noseekbar;
     }
 
     @Override

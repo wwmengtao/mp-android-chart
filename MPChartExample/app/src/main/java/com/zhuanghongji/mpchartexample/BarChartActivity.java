@@ -49,9 +49,6 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_barchart);
 
         tvX = (TextView) findViewById(R.id.tvXMax);
         tvY = (TextView) findViewById(R.id.tvYMax);
@@ -133,6 +130,11 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
         mSeekBarX.setOnSeekBarChangeListener(this);
 
         // mChart.setDrawLegend(false);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_barchart;
     }
 
     @Override

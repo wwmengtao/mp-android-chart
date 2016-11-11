@@ -24,10 +24,6 @@ public class SimpleChartDemo extends DemoBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
-        setContentView(R.layout.activity_awesomedesign);
 
         ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setOffscreenPageLimit(3);
@@ -48,7 +44,12 @@ public class SimpleChartDemo extends DemoBase {
         });
         b.show();
     }
-       
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_awesomedesign;
+    }
+
     private class PageAdapter extends FragmentPagerAdapter {
 
         public PageAdapter(FragmentManager fm) {

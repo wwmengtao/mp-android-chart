@@ -27,9 +27,6 @@ public class FilledLineActivity extends DemoBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_linechart_noseekbar);
 
         mChart = (LineChart) findViewById(R.id.chart1);
         mChart.setBackgroundColor(Color.WHITE);
@@ -63,6 +60,11 @@ public class FilledLineActivity extends DemoBase {
         setData(100, 60);
 
         mChart.invalidate();
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_linechart_noseekbar;
     }
 
     private void setData(int count, float range) {

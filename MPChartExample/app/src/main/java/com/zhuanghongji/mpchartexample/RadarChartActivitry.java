@@ -34,9 +34,6 @@ public class RadarChartActivitry extends DemoBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_radarchart_noseekbar);
 
         TextView tv = (TextView) findViewById(R.id.textView);
         tv.setTypeface(mTfLight);
@@ -105,6 +102,11 @@ public class RadarChartActivitry extends DemoBase {
         l.setXEntrySpace(7f);
         l.setYEntrySpace(5f);
         l.setTextColor(Color.WHITE);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_radarchart_noseekbar;
     }
 
     @Override

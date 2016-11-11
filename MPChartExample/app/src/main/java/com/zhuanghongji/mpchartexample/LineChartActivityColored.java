@@ -23,9 +23,6 @@ public class LineChartActivityColored extends DemoBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_colored_lines);
 
         mCharts[0] = (LineChart) findViewById(R.id.chart1);
         mCharts[1] = (LineChart) findViewById(R.id.chart2);
@@ -42,6 +39,11 @@ public class LineChartActivityColored extends DemoBase {
             // add some transparency to the color with "& 0x90FFFFFF"
             setupChart(mCharts[i], data, mColors[i % mColors.length]);
         }
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_colored_lines;
     }
 
     private int[] mColors = new int[] {

@@ -26,9 +26,6 @@ public class RealmDatabaseActivityScatter extends RealmBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_scatterchart_noseekbar);
 
         mChart = (ScatterChart) findViewById(R.id.chart1);
         setup(mChart);
@@ -36,6 +33,11 @@ public class RealmDatabaseActivityScatter extends RealmBaseActivity {
         mChart.getAxisLeft().setDrawGridLines(false);
         mChart.getXAxis().setDrawGridLines(false);
         mChart.setPinchZoom(true);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_scatterchart_noseekbar;
     }
 
     @Override

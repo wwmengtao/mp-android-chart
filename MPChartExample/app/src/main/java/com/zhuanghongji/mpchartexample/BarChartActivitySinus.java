@@ -37,9 +37,6 @@ public class BarChartActivitySinus extends DemoBase implements OnSeekBarChangeLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_barchart_sinus);
 
         mSinusData = FileUtils.loadBarEntriesFromAssets(getAssets(), "othersine.txt");
 
@@ -102,6 +99,11 @@ public class BarChartActivitySinus extends DemoBase implements OnSeekBarChangeLi
         l.setXEntrySpace(4f);
 
         mChart.animateXY(2000, 2000);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_barchart_sinus;
     }
 
     @Override

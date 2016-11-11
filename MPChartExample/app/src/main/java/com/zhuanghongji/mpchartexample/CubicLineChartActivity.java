@@ -35,9 +35,6 @@ public class CubicLineChartActivity extends DemoBase implements OnSeekBarChangeL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_linechart);
 
         tvX = (TextView) findViewById(R.id.tvXMax);
         tvY = (TextView) findViewById(R.id.tvYMax);
@@ -93,6 +90,11 @@ public class CubicLineChartActivity extends DemoBase implements OnSeekBarChangeL
 
         // dont forget to refresh the drawing
         mChart.invalidate();
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_linechart;
     }
 
     @Override

@@ -44,9 +44,6 @@ public class CombinedChartActivity extends DemoBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_combined);
 
         mChart = (CombinedChart) findViewById(R.id.chart1);
         mChart.getDescription().setEnabled(false);
@@ -104,6 +101,11 @@ public class CombinedChartActivity extends DemoBase {
 
         mChart.setData(data);
         mChart.invalidate();
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_combined;
     }
 
     private LineData generateLineData() {

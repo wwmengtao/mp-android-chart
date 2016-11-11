@@ -28,14 +28,16 @@ public class RealmDatabaseActivityPie extends RealmBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_piechart_noseekbar);
 
         mChart = (PieChart) findViewById(R.id.chart1);
         setup(mChart);
 
         mChart.setCenterText(generateCenterSpannableText());
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_piechart_noseekbar;
     }
 
     @Override

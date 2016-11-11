@@ -40,8 +40,6 @@ public class StackedBarActivity extends DemoBase implements OnSeekBarChangeListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_barchart);
 
         tvX = (TextView) findViewById(R.id.tvXMax);
         tvY = (TextView) findViewById(R.id.tvYMax);
@@ -96,6 +94,11 @@ public class StackedBarActivity extends DemoBase implements OnSeekBarChangeListe
         l.setXEntrySpace(6f);
 
         // mChart.setDrawLegend(false);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_barchart;
     }
 
     @Override

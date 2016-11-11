@@ -31,9 +31,6 @@ public class HalfPieChartActivity extends DemoBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_piechart_half);
 
         mChart = (PieChart) findViewById(R.id.chart1);
         mChart.setBackgroundColor(Color.WHITE);
@@ -81,6 +78,11 @@ public class HalfPieChartActivity extends DemoBase {
         mChart.setEntryLabelColor(Color.WHITE);
         mChart.setEntryLabelTypeface(mTfRegular);
         mChart.setEntryLabelTextSize(12f);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_piechart_half;
     }
 
     private void setData(int count, float range) {

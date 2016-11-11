@@ -32,9 +32,6 @@ public class RealtimeLineChartActivity extends DemoBase implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_realtime_linechart);
 
         mChart = (LineChart) findViewById(R.id.chart1);
         mChart.setOnChartValueSelectedListener(this);
@@ -87,6 +84,11 @@ public class RealtimeLineChartActivity extends DemoBase implements
         YAxis rightAxis = mChart.getAxisRight();
         rightAxis.setEnabled(false);
 
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_realtime_linechart;
     }
 
     @Override

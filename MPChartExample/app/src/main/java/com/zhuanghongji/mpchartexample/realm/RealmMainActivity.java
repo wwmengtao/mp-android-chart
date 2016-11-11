@@ -28,9 +28,6 @@ public class RealmMainActivity extends DemoBase implements AdapterView.OnItemCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
 
         setTitle("Realm.io Examples");
 
@@ -64,6 +61,11 @@ public class RealmMainActivity extends DemoBase implements AdapterView.OnItemCli
         realm.beginTransaction();
         realm.deleteAll();
         realm.commitTransaction();
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_main;
     }
 
     @Override

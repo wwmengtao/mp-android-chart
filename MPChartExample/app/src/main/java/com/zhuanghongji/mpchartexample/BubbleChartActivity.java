@@ -38,9 +38,6 @@ public class BubbleChartActivity extends DemoBase implements OnSeekBarChangeList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_bubblechart);
 
         tvX = (TextView) findViewById(R.id.tvXMax);
         tvY = (TextView) findViewById(R.id.tvYMax);
@@ -88,6 +85,11 @@ public class BubbleChartActivity extends DemoBase implements OnSeekBarChangeList
         XAxis xl = mChart.getXAxis();
         xl.setPosition(XAxis.XAxisPosition.BOTTOM);
         xl.setTypeface(mTfLight);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_bubblechart;
     }
 
     @Override

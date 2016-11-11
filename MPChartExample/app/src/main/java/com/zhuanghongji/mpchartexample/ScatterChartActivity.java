@@ -37,9 +37,6 @@ public class ScatterChartActivity extends DemoBase implements OnSeekBarChangeLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_scatterchart);
 
         tvX = (TextView) findViewById(R.id.tvXMax);
         tvY = (TextView) findViewById(R.id.tvYMax);
@@ -85,6 +82,11 @@ public class ScatterChartActivity extends DemoBase implements OnSeekBarChangeLis
         XAxis xl = mChart.getXAxis();
         xl.setTypeface(mTfLight);
         xl.setDrawGridLines(false);
+    }
+
+    @Override
+    protected int getLayoutResID() {
+        return R.layout.activity_scatterchart;
     }
 
     @Override
