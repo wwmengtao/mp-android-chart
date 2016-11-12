@@ -1,4 +1,3 @@
-
 package com.zhuanghongji.mpchartexample.notimportant;
 
 import android.content.Intent;
@@ -49,12 +48,12 @@ import com.zhuanghongji.mpchartexample.realm.RealmMainActivity;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements OnItemClickListener {
 
     @BindView(R.id.listView1)
     ListView lv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,87 +66,107 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 
         ArrayList<ContentItem> objects = new ArrayList<>();
 
-        objects.add(new ContentItem("Line Chart", "A simple demonstration of the linechart."));
-        objects.add(new ContentItem("Line Chart (Dual YAxis)",
-                "Demonstration of the linechart with dual y-axis."));
-        objects.add(new ContentItem("Bar Chart", "A simple demonstration of the bar chart."));
-        objects.add(new ContentItem("Horizontal Bar Chart",
-                "A simple demonstration of the horizontal bar chart."));
-        objects.add(new ContentItem("Combined Chart",
-                "Demonstrates how to create a combined chart (bar and line in this case)."));
-        objects.add(new ContentItem("Pie Chart", "A simple demonstration of the pie chart."));
-        objects.add(new ContentItem("Pie Chart with value lines", "A simple demonstration of the pie chart with polyline notes."));
-        objects.add(new ContentItem("Scatter Chart", "A simple demonstration of the scatter chart."));
-        objects.add(new ContentItem("Bubble Chart", "A simple demonstration of the bubble chart."));
-        objects.add(new ContentItem("Stacked Bar Chart",
-                "A simple demonstration of a bar chart with stacked bars."));
-        objects.add(new ContentItem("Stacked Bar Chart Negative",
-                "A simple demonstration of stacked bars with negative and positive values."));
-        objects.add(new ContentItem("Another Bar Chart",
-                "Implementation of a BarChart that only shows values at the bottom."));
-        objects.add(new ContentItem("Multiple Lines Chart",
-                "A line chart with multiple DataSet objects. One color per DataSet."));
-        objects.add(new ContentItem("Multiple Bars Chart",
-                "A bar chart with multiple DataSet objects. One multiple colors per DataSet."));
         objects.add(new ContentItem(
-                "Charts in ViewPager Fragments",
-                "Demonstration of charts inside ViewPager Fragments. In this example the focus was on the design and look and feel of the chart."));
+                getString(R.string.ci_0_name),
+                getString(R.string.ci_0_desc)));
         objects.add(new ContentItem(
-                "BarChart inside ListView",
-                "Demonstrates the usage of a BarChart inside a ListView item."));
+                getString(R.string.ci_1_name),
+                getString(R.string.ci_1_desc)));
         objects.add(new ContentItem(
-                "Multiple charts inside ListView",
-                "Demonstrates the usage of different chart types inside a ListView."));
+                getString(R.string.ci_2_name),
+                getString(R.string.ci_2_desc)));
         objects.add(new ContentItem(
-                "Inverted Line Chart",
-                "Demonstrates the feature of inverting the y-axis."));
+                getString(R.string.ci_3_name),
+                getString(R.string.ci_3_desc)));
         objects.add(new ContentItem(
-                "Candle Stick Chart",
-                "Demonstrates usage of the CandleStickChart."));
+                getString(R.string.ci_4_name),
+                getString(R.string.ci_4_desc)));
         objects.add(new ContentItem(
-                "Cubic Line Chart",
-                "Demonstrates cubic lines in a LineChart."));
+                getString(R.string.ci_5_name),
+                getString(R.string.ci_5_desc)));
         objects.add(new ContentItem(
-                "Radar Chart",
-                "Demonstrates the use of a spider-web like (net) chart."));
+                getString(R.string.ci_6_name),
+                getString(R.string.ci_6_desc)));
         objects.add(new ContentItem(
-                "Colored Line Chart",
-                "Shows a LineChart with different background and line color."));
+                getString(R.string.ci_7_name),
+                getString(R.string.ci_7_desc)));
         objects.add(new ContentItem(
-                "Realtime Chart",
-                "This chart is fed with new data in realtime. It also restrains the view on the x-axis."));
+                getString(R.string.ci_8_name),
+                getString(R.string.ci_8_desc)));
         objects.add(new ContentItem(
-                "Dynamical data adding",
-                "This Activity demonstrates dynamical adding of Entries and DataSets (real time graph)."));
+                getString(R.string.ci_9_name),
+                getString(R.string.ci_9_desc)));
         objects.add(new ContentItem(
-                "Performance Line Chart",
-                "Renders up to 30.000 objects smoothly."));
+                getString(R.string.ci_10_name),
+                getString(R.string.ci_10_desc)));
         objects.add(new ContentItem(
-                "Sinus Bar Chart",
-                "A Bar Chart plotting the sinus function with 8.000 values."));
+                getString(R.string.ci_11_name),
+                getString(R.string.ci_11_desc)));
         objects.add(new ContentItem(
-                "Chart in ScrollView",
-                "This demonstrates how to use a chart inside a ScrollView."));
+                getString(R.string.ci_12_name),
+                getString(R.string.ci_12_desc)));
         objects.add(new ContentItem(
-                "BarChart positive / negative",
-                "This demonstrates how to create a BarChart with positive and negative values in different colors."));
+                getString(R.string.ci_13_name),
+                getString(R.string.ci_13_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_14_name),
+                getString(R.string.ci_14_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_15_name),
+                getString(R.string.ci_15_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_16_name),
+                getString(R.string.ci_16_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_17_name),
+                getString(R.string.ci_17_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_18_name),
+                getString(R.string.ci_18_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_19_name),
+                getString(R.string.ci_19_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_20_name),
+                getString(R.string.ci_20_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_21_name),
+                getString(R.string.ci_21_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_22_name),
+                getString(R.string.ci_22_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_23_name),
+                getString(R.string.ci_23_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_24_name),
+                getString(R.string.ci_24_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_25_name),
+                getString(R.string.ci_25_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_26_name),
+                getString(R.string.ci_26_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.ci_27_name),
+                getString(R.string.ci_27_desc)));
 
         ContentItem realm = new ContentItem(
-                "Realm.io Database",
-                "This demonstrates how to use this library with Realm.io mobile database.");
+                getString(R.string.ci_28_name),
+                getString(R.string.ci_28_desc));
         objects.add(realm);
 
         ContentItem time = new ContentItem(
-                "Time Chart",
-                "Simple demonstration of a time-chart. This chart draws one line entry per hour originating from the current time in milliseconds.");
+                getString(R.string.ci_29_name),
+                getString(R.string.ci_29_desc));
         time.isNew = true;
         objects.add(time);
         objects.add(new ContentItem(
-                "Filled LineChart",
-                "This demonstrates how to fill an area between two LineDataSets."));
+                getString(R.string.ci_30_name),
+                getString(R.string.ci_30_desc)));
         objects.add(new ContentItem(
-                "Half PieChart",
-                "This demonstrates how to create a 180 degree PieChart."));
+                getString(R.string.ci_31_name),
+                getString(R.string.ci_31_desc)));
 
         MyAdapter adapter = new MyAdapter(this, objects);
 
