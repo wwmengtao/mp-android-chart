@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LineChartActivity1"/> <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
+        <activity android:name=".LineChartActivity1"
+            android:parentActivityName=".notimportant.MainActivity"/> <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
         <activity android:name=".LineChartActivity2"/>
         <activity android:name=".LineChartTime"/>
         <activity android:name=".BarChartActivity"/>

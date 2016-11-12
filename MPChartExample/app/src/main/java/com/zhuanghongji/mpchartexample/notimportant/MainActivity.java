@@ -1,14 +1,19 @@
 package com.zhuanghongji.mpchartexample.notimportant;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.utils.Utils;
 import com.zhuanghongji.mpchartexample.AnotherBarActivity;
@@ -49,23 +54,146 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity implements OnItemClickListener {
+public class MainActivity extends BaseActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     @BindView(R.id.listView1)
     ListView lv;
 
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initToolbar();
-        mToolbar.setTitle("MPAndroidChart Example");
-
+        mContext = this;
         // initialize the utilities
         Utils.init(this);
 
-        ArrayList<ContentItem> objects = new ArrayList<>();
+        ArrayList<ContentItem> objects = getContentItems();
+        MyAdapter adapter = new MyAdapter(this, objects);
 
+        lv.setAdapter(adapter);
+        View footer = LayoutInflater.from(this).inflate(R.layout.tip_end,null);
+        lv.addFooterView(footer);
+        lv.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                Intent i;
+                switch (pos) {
+                    case 0:
+                        i = new Intent(mContext, LineChartActivity1.class);
+                        break;
+                    case 1:
+                        i = new Intent(mContext, LineChartActivity2.class);
+                        break;
+                    case 2:
+                        i = new Intent(mContext, BarChartActivity.class);
+                        break;
+                    case 3:
+                        i = new Intent(mContext, HorizontalBarChartActivity.class);
+                        break;
+                    case 4:
+                        i = new Intent(mContext, CombinedChartActivity.class);
+                        break;
+                    case 5:
+                        i = new Intent(mContext, PieChartActivity.class);
+                        break;
+                    case 6:
+                        i = new Intent(mContext, PiePolylineChartActivity.class);
+                        break;
+                    case 7:
+                        i = new Intent(mContext, ScatterChartActivity.class);
+                        break;
+                    case 8:
+                        i = new Intent(mContext, BubbleChartActivity.class);
+                        break;
+                    case 9:
+                        i = new Intent(mContext, StackedBarActivity.class);
+                        break;
+                    case 10:
+                        i = new Intent(mContext, StackedBarActivityNegative.class);
+                        break;
+                    case 11:
+                        i = new Intent(mContext, AnotherBarActivity.class);
+                        break;
+                    case 12:
+                        i = new Intent(mContext, MultiLineChartActivity.class);
+                        break;
+                    case 13:
+                        i = new Intent(mContext, BarChartActivityMultiDataset.class);
+                        break;
+                    case 14:
+                        i = new Intent(mContext, SimpleChartDemo.class);
+                        break;
+                    case 15:
+                        i = new Intent(mContext, ListViewBarChartActivity.class);
+                        break;
+                    case 16:
+                        i = new Intent(mContext, ListViewMultiChartActivity.class);
+                        break;
+                    case 17:
+                        i = new Intent(mContext, InvertedLineChartActivity.class);
+                        break;
+                    case 18:
+                        i = new Intent(mContext, CandleStickChartActivity.class);
+                        break;
+                    case 19:
+                        i = new Intent(mContext, CubicLineChartActivity.class);
+                        break;
+                    case 20:
+                        i = new Intent(mContext, RadarChartActivitry.class);
+                        break;
+                    case 21:
+                        i = new Intent(mContext, LineChartActivityColored.class);
+                        break;
+                    case 22:
+                        i = new Intent(mContext, RealtimeLineChartActivity.class);
+                        break;
+                    case 23:
+                        i = new Intent(mContext, DynamicalAddingActivity.class);
+                        break;
+                    case 24:
+                        i = new Intent(mContext, PerformanceLineChart.class);
+                        break;
+                    case 25:
+                        i = new Intent(mContext, BarChartActivitySinus.class);
+                        break;
+                    case 26:
+                        i = new Intent(mContext, ScrollViewActivity.class);
+                        break;
+                    case 27:
+                        i = new Intent(mContext, BarChartPositiveNegative.class);
+                        break;
+                    case 28:
+                        i = new Intent(mContext, RealmMainActivity.class);
+                        break;
+                    case 29:
+                        i = new Intent(mContext, LineChartTime.class);
+                        break;
+                    case 30:
+                        i = new Intent(mContext, FilledLineActivity.class);
+                        break;
+                    case 31:
+                        i = new Intent(mContext, HalfPieChartActivity.class);
+                        break;
+                    default:
+                        i = null;
+                        break;
+
+                }
+                if (i != null) {
+                    startActivity(i);
+                    overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
+                }
+            }
+        });
+    }
+
+    @NonNull
+    private ArrayList<ContentItem> getContentItems() {
+        ArrayList<ContentItem> objects = new ArrayList<>();
         objects.add(new ContentItem(
                 getString(R.string.ci_0_name),
                 getString(R.string.ci_0_desc)));
@@ -167,12 +295,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
         objects.add(new ContentItem(
                 getString(R.string.ci_31_name),
                 getString(R.string.ci_31_desc)));
-
-        MyAdapter adapter = new MyAdapter(this, objects);
-
-        lv.setAdapter(adapter);
-
-        lv.setOnItemClickListener(this);
+        return objects;
     }
 
     @Override
@@ -181,181 +304,41 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
     }
 
     @Override
-    public void onItemClick(AdapterView<?> av, View v, int pos, long arg3) {
+    protected void initToolbar() {
+        mToolbar.setTitle("MPAndroidChart Example");
+        mToolbar.inflateMenu(R.menu.main);
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent i;
+                switch (item.getItemId()) {
+                    case R.id.viewGithub:
+                        i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse("https://github.com/PhilJay/MPAndroidChart"));
+                        startActivity(i);
+                        break;
+                    case R.id.report:
+                        i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                                "mailto", "philjay.librarysup@gmail.com", null));
+                        i.putExtra(Intent.EXTRA_SUBJECT, "MPAndroidChart Issue");
+                        i.putExtra(Intent.EXTRA_TEXT, "Your error report here...");
+                        startActivity(Intent.createChooser(i, "Report Problem"));
+                        break;
+                    case R.id.blog:
+                        i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse("http://www.zhuanghongji.com"));
+                        startActivity(i);
+                        break;
+                    case R.id.website:
+                        i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse("http://at.linkedin.com/in/philippjahoda"));
+                        startActivity(i);
+                        break;
+                }
 
-        Intent i;
-
-        switch (pos) {
-            case 0:
-                i = new Intent(this, LineChartActivity1.class);
-                startActivity(i);
-                break;
-            case 1:
-                i = new Intent(this, LineChartActivity2.class);
-                startActivity(i);
-                break;
-            case 2:
-                i = new Intent(this, BarChartActivity.class);
-                startActivity(i);
-                break;
-            case 3:
-                i = new Intent(this, HorizontalBarChartActivity.class);
-                startActivity(i);
-                break;
-            case 4:
-                i = new Intent(this, CombinedChartActivity.class);
-                startActivity(i);
-                break;
-            case 5:
-                i = new Intent(this, PieChartActivity.class);
-                startActivity(i);
-                break;
-            case 6:
-                i = new Intent(this, PiePolylineChartActivity.class);
-                startActivity(i);
-                break;
-            case 7:
-                i = new Intent(this, ScatterChartActivity.class);
-                startActivity(i);
-                break;
-            case 8:
-                i = new Intent(this, BubbleChartActivity.class);
-                startActivity(i);
-                break;
-            case 9:
-                i = new Intent(this, StackedBarActivity.class);
-                startActivity(i);
-                break;
-            case 10:
-                i = new Intent(this, StackedBarActivityNegative.class);
-                startActivity(i);
-                break;
-            case 11:
-                i = new Intent(this, AnotherBarActivity.class);
-                startActivity(i);
-                break;
-            case 12:
-                i = new Intent(this, MultiLineChartActivity.class);
-                startActivity(i);
-                break;
-            case 13:
-                i = new Intent(this, BarChartActivityMultiDataset.class);
-                startActivity(i);
-                break;
-            case 14:
-                i = new Intent(this, SimpleChartDemo.class);
-                startActivity(i);
-                break;
-            case 15:
-                i = new Intent(this, ListViewBarChartActivity.class);
-                startActivity(i);
-                break;
-            case 16:
-                i = new Intent(this, ListViewMultiChartActivity.class);
-                startActivity(i);
-                break;
-            case 17:
-                i = new Intent(this, InvertedLineChartActivity.class);
-                startActivity(i);
-                break;
-            case 18:
-                i = new Intent(this, CandleStickChartActivity.class);
-                startActivity(i);
-                break;
-            case 19:
-                i = new Intent(this, CubicLineChartActivity.class);
-                startActivity(i);
-                break;
-            case 20:
-                i = new Intent(this, RadarChartActivitry.class);
-                startActivity(i);
-                break;
-            case 21:
-                i = new Intent(this, LineChartActivityColored.class);
-                startActivity(i);
-                break;
-            case 22:
-                i = new Intent(this, RealtimeLineChartActivity.class);
-                startActivity(i);
-                break;
-            case 23:
-                i = new Intent(this, DynamicalAddingActivity.class);
-                startActivity(i);
-                break;
-            case 24:
-                i = new Intent(this, PerformanceLineChart.class);
-                startActivity(i);
-                break;
-            case 25:
-                i = new Intent(this, BarChartActivitySinus.class);
-                startActivity(i);
-                break;
-            case 26:
-                i = new Intent(this, ScrollViewActivity.class);
-                startActivity(i);
-                break;
-            case 27:
-                i = new Intent(this, BarChartPositiveNegative.class);
-                startActivity(i);
-                break;
-            case 28:
-                i = new Intent(this, RealmMainActivity.class);
-                startActivity(i);
-                break;
-            case 29:
-                i = new Intent(this, LineChartTime.class);
-                startActivity(i);
-                break;
-            case 30:
-                i = new Intent(this, FilledLineActivity.class);
-                startActivity(i);
-                break;
-            case 31:
-                i = new Intent(this, HalfPieChartActivity.class);
-                startActivity(i);
-                break;
-
-        }
-
-        overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
+                return true;
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        Intent i = null;
-
-        switch (item.getItemId()) {
-            case R.id.viewGithub:
-                i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse("https://github.com/PhilJay/MPAndroidChart"));
-                startActivity(i);
-                break;
-            case R.id.report:
-                i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", "philjay.librarysup@gmail.com", null));
-                i.putExtra(Intent.EXTRA_SUBJECT, "MPAndroidChart Issue");
-                i.putExtra(Intent.EXTRA_TEXT, "Your error report here...");
-                startActivity(Intent.createChooser(i, "Report Problem"));
-                break;
-            case R.id.blog:
-                i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse("http://www.zhuanghongji.com"));
-                startActivity(i);
-                break;
-            case R.id.website:
-                i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse("http://at.linkedin.com/in/philippjahoda"));
-                startActivity(i);
-                break;
-        }
-
-        return true;
-    }
 }

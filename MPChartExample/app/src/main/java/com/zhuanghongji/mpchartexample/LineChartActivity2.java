@@ -3,9 +3,11 @@ package com.zhuanghongji.mpchartexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -30,21 +32,36 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.BindViews;
+
+import static com.zhuanghongji.mpchartexample.R.menu.line;
+
 public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListener,
         OnChartValueSelectedListener {
 
-    private LineChart mChart;
-    private SeekBar mSeekBarX, mSeekBarY;
-    private TextView tvX, tvY;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    LineChart mChart;
+
+    @BindView(R.id.seekBar1)
+    SeekBar mSeekBarX;
+
+    @BindView(R.id.seekBar2)
+    SeekBar mSeekBarY;
+
+    @BindView(R.id.tvXMax)
+    TextView tvX;
+
+    @BindView(R.id.tvYMax)
+    TextView tvY;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        tvX = (TextView) findViewById(R.id.tvXMax);
-        tvY = (TextView) findViewById(R.id.tvYMax);
-        mSeekBarX = (SeekBar) findViewById(R.id.seekBar1);
-        mSeekBarY = (SeekBar) findViewById(R.id.seekBar2);
 
         mSeekBarX.setProgress(45);
         mSeekBarY.setProgress(100);
@@ -125,150 +142,159 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.line, menu);
-        return true;
+    protected void initToolbar() {
+        mToolbar.setTitle(R.string.ci_1_name);
+        mToolbar.setSubtitle(R.string.ci_1_desc);
+        mToolbar.inflateMenu(R.menu.line);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LineChartActivity2.this.finish();
+            }
+        });
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.actionToggleValues: {
+                        List<ILineDataSet> sets = mChart.getData()
+                                .getDataSets();
+
+                        for (ILineDataSet iSet : sets) {
+
+                            LineDataSet set = (LineDataSet) iSet;
+                            set.setDrawValues(!set.isDrawValuesEnabled());
+                        }
+
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleHighlight: {
+                        if (mChart.getData() != null) {
+                            mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
+                            mChart.invalidate();
+                        }
+                        break;
+                    }
+                    case R.id.actionToggleFilled: {
+
+                        List<ILineDataSet> sets = mChart.getData()
+                                .getDataSets();
+
+                        for (ILineDataSet iSet : sets) {
+
+                            LineDataSet set = (LineDataSet) iSet;
+                            if (set.isDrawFilledEnabled())
+                                set.setDrawFilled(false);
+                            else
+                                set.setDrawFilled(true);
+                        }
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleCircles: {
+                        List<ILineDataSet> sets = mChart.getData()
+                                .getDataSets();
+
+                        for (ILineDataSet iSet : sets) {
+
+                            LineDataSet set = (LineDataSet) iSet;
+                            if (set.isDrawCirclesEnabled())
+                                set.setDrawCircles(false);
+                            else
+                                set.setDrawCircles(true);
+                        }
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleCubic: {
+                        List<ILineDataSet> sets = mChart.getData()
+                                .getDataSets();
+
+                        for (ILineDataSet iSet : sets) {
+
+                            LineDataSet set = (LineDataSet) iSet;
+                            set.setMode(set.getMode() == LineDataSet.Mode.CUBIC_BEZIER
+                                    ? LineDataSet.Mode.LINEAR
+                                    : LineDataSet.Mode.CUBIC_BEZIER);
+                        }
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleStepped: {
+                        List<ILineDataSet> sets = mChart.getData()
+                                .getDataSets();
+
+                        for (ILineDataSet iSet : sets) {
+
+                            LineDataSet set = (LineDataSet) iSet;
+                            set.setMode(set.getMode() == LineDataSet.Mode.STEPPED
+                                    ? LineDataSet.Mode.LINEAR
+                                    : LineDataSet.Mode.STEPPED);
+                        }
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleHorizontalCubic: {
+                        List<ILineDataSet> sets = mChart.getData()
+                                .getDataSets();
+
+                        for (ILineDataSet iSet : sets) {
+
+                            LineDataSet set = (LineDataSet) iSet;
+                            set.setMode(set.getMode() == LineDataSet.Mode.HORIZONTAL_BEZIER
+                                    ? LineDataSet.Mode.LINEAR
+                                    : LineDataSet.Mode.HORIZONTAL_BEZIER);
+                        }
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionTogglePinch: {
+                        if (mChart.isPinchZoomEnabled())
+                            mChart.setPinchZoom(false);
+                        else
+                            mChart.setPinchZoom(true);
+
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleAutoScaleMinMax: {
+                        mChart.setAutoScaleMinMaxEnabled(!mChart.isAutoScaleMinMaxEnabled());
+                        mChart.notifyDataSetChanged();
+                        break;
+                    }
+                    case R.id.animateX: {
+                        mChart.animateX(3000);
+                        //mChart.highlightValue(9.7f, 1, false);
+                        break;
+                    }
+                    case R.id.animateY: {
+                        mChart.animateY(3000);
+                        break;
+                    }
+                    case R.id.animateXY: {
+                        mChart.animateXY(3000, 3000);
+                        break;
+                    }
+
+                    case R.id.actionSave: {
+                        if (mChart.saveToPath("title" + System.currentTimeMillis(), "")) {
+                            Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!",
+                                    Toast.LENGTH_SHORT).show();
+                        } else
+                            Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT)
+                                    .show();
+
+                        // mChart.saveToGallery("title"+System.currentTimeMillis())
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.actionToggleValues: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setDrawValues(!set.isDrawValuesEnabled());
-                }
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleHighlight: {
-                if (mChart.getData() != null) {
-                    mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
-                    mChart.invalidate();
-                }
-                break;
-            }
-            case R.id.actionToggleFilled: {
-
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    if (set.isDrawFilledEnabled())
-                        set.setDrawFilled(false);
-                    else
-                        set.setDrawFilled(true);
-                }
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleCircles: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    if (set.isDrawCirclesEnabled())
-                        set.setDrawCircles(false);
-                    else
-                        set.setDrawCircles(true);
-                }
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleCubic: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setMode(set.getMode() == LineDataSet.Mode.CUBIC_BEZIER
-                            ? LineDataSet.Mode.LINEAR
-                            : LineDataSet.Mode.CUBIC_BEZIER);
-                }
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleStepped: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setMode(set.getMode() == LineDataSet.Mode.STEPPED
-                            ? LineDataSet.Mode.LINEAR
-                            : LineDataSet.Mode.STEPPED);
-                }
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleHorizontalCubic: {
-                List<ILineDataSet> sets = mChart.getData()
-                        .getDataSets();
-
-                for (ILineDataSet iSet : sets) {
-
-                    LineDataSet set = (LineDataSet) iSet;
-                    set.setMode(set.getMode() == LineDataSet.Mode.HORIZONTAL_BEZIER
-                            ? LineDataSet.Mode.LINEAR
-                            : LineDataSet.Mode.HORIZONTAL_BEZIER);
-                }
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionTogglePinch: {
-                if (mChart.isPinchZoomEnabled())
-                    mChart.setPinchZoom(false);
-                else
-                    mChart.setPinchZoom(true);
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleAutoScaleMinMax: {
-                mChart.setAutoScaleMinMaxEnabled(!mChart.isAutoScaleMinMaxEnabled());
-                mChart.notifyDataSetChanged();
-                break;
-            }
-            case R.id.animateX: {
-                mChart.animateX(3000);
-                //mChart.highlightValue(9.7f, 1, false);
-                break;
-            }
-            case R.id.animateY: {
-                mChart.animateY(3000);
-                break;
-            }
-            case R.id.animateXY: {
-                mChart.animateXY(3000, 3000);
-                break;
-            }
-
-            case R.id.actionSave: {
-                if (mChart.saveToPath("title" + System.currentTimeMillis(), "")) {
-                    Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!",
-                            Toast.LENGTH_SHORT).show();
-                } else
-                    Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT)
-                            .show();
-
-                // mChart.saveToGallery("title"+System.currentTimeMillis())
-                break;
-            }
-        }
-        return true;
-    }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -294,7 +320,7 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
 
         ArrayList<Entry> yVals2 = new ArrayList<Entry>();
 
-        for (int i = 0; i < count-1; i++) {
+        for (int i = 0; i < count - 1; i++) {
             float mult = range;
             float val = (float) (Math.random() * mult) + 450;
             yVals2.add(new Entry(i, val));
