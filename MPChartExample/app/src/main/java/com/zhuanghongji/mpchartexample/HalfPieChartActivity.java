@@ -85,6 +85,16 @@ public class HalfPieChartActivity extends DemoBase {
         return R.layout.activity_piechart_half;
     }
 
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
     private void setData(int count, float range) {
 
         ArrayList<PieEntry> values = new ArrayList<PieEntry>();

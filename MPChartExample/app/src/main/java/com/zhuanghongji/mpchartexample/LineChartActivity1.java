@@ -70,7 +70,6 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initEvents();
         // 先为SeekBar设置ChangeListener，这样setProgress时也会触发
         mSeekBarX.setProgress(45);
         mSeekBarY.setProgress(100);
@@ -168,7 +167,8 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
         // mChart.invalidate();
     }
 
-    private void initEvents() {
+    @Override
+    protected void initEvents() {
         mSeekBarY.setOnSeekBarChangeListener(this);
         mSeekBarX.setOnSeekBarChangeListener(this);
 
@@ -182,7 +182,7 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
     }
 
     @Override
-    protected void initToolbar() {
+    protected void initViews() {
         mToolbar.setTitle(R.string.ci_0_name);
         mToolbar.setSubtitle(R.string.ci_0_desc);
         mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);

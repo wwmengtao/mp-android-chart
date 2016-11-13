@@ -47,6 +47,16 @@ public class DynamicalAddingActivity extends DemoBase implements OnChartValueSel
         return R.layout.activity_linechart_noseekbar;
     }
 
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
     int[] mColors = ColorTemplate.VORDIPLOM_COLORS;
 
     private void addEntry() {

@@ -115,6 +115,16 @@ public class InvertedLineChartActivity extends DemoBase implements OnSeekBarChan
     }
 
     @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.line, menu);
         return true;

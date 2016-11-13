@@ -90,6 +90,16 @@ public class ScatterChartActivity extends DemoBase implements OnSeekBarChangeLis
     }
 
     @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.scatter, menu);
         return true;

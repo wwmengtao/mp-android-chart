@@ -124,6 +124,16 @@ public class LineChartTime extends DemoBase implements OnSeekBarChangeListener {
     }
 
     @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.line, menu);
         return true;

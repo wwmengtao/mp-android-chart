@@ -55,6 +55,16 @@ public class ListViewBarChartActivity extends DemoBase {
         return R.layout.activity_listview_chart;
     }
 
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
     private class ChartDataAdapter extends ArrayAdapter<BarData> {
 
         public ChartDataAdapter(Context context, List<BarData> objects) {

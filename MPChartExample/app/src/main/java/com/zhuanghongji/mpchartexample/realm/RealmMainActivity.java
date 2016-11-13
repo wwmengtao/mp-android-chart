@@ -69,6 +69,16 @@ public class RealmMainActivity extends DemoBase implements AdapterView.OnItemCli
     }
 
     @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> av, View v, int pos, long arg3) {
 
         Intent i;

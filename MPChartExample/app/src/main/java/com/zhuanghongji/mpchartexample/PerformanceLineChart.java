@@ -66,6 +66,16 @@ public class PerformanceLineChart extends DemoBase implements OnSeekBarChangeLis
     }
 
     @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
+    @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
         int count = mSeekBarValues.getProgress() + 1000;

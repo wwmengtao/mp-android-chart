@@ -102,6 +102,16 @@ public class BarChartPositiveNegative extends DemoBase {
         return R.layout.activity_barchart_noseekbar;
     }
 
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
     private void setData(List<Data> dataList) {
 
         ArrayList<BarEntry> values = new ArrayList<BarEntry>();

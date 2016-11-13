@@ -85,6 +85,16 @@ public class CandleStickChartActivity extends DemoBase implements OnSeekBarChang
     }
 
     @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.candle, menu);
         return true;

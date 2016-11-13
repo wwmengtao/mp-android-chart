@@ -75,6 +75,16 @@ public class DrawChartActivity extends DemoBase implements OnChartValueSelectedL
         return R.layout.activity_draw_chart;
     }
 
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
     private void initWithDummyData() {
 
         ArrayList<Entry> yVals = new ArrayList<Entry>();

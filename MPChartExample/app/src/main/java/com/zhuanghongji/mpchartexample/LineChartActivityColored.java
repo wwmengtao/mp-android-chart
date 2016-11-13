@@ -46,6 +46,16 @@ public class LineChartActivityColored extends DemoBase {
         return R.layout.activity_colored_lines;
     }
 
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
     private int[] mColors = new int[] {
             Color.rgb(137, 230, 81),
             Color.rgb(240, 240, 30),

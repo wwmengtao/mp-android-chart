@@ -67,6 +67,16 @@ public class FilledLineActivity extends DemoBase {
         return R.layout.activity_linechart_noseekbar;
     }
 
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
     private void setData(int count, float range) {
 
         ArrayList<Entry> yVals1 = new ArrayList<Entry>();

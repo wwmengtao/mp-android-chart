@@ -67,6 +67,16 @@ public class ListViewMultiChartActivity extends DemoBase {
         return R.layout.activity_listview_chart;
     }
 
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
     /** adapter that supports 3 different item types */
     private class ChartDataAdapter extends ArrayAdapter<ChartItem> {
         

@@ -92,6 +92,16 @@ public class RealtimeLineChartActivity extends DemoBase implements
     }
 
     @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.realtime, menu);
         return true;

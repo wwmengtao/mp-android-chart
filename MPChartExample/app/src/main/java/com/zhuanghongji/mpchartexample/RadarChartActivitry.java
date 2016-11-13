@@ -110,6 +110,16 @@ public class RadarChartActivitry extends DemoBase {
     }
 
     @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.radar, menu);
         return true;

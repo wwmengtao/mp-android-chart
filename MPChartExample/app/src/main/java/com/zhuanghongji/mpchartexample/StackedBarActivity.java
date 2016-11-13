@@ -102,6 +102,16 @@ public class StackedBarActivity extends DemoBase implements OnSeekBarChangeListe
     }
 
     @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bar, menu);
         return true;

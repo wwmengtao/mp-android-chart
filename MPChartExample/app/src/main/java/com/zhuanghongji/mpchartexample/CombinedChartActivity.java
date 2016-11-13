@@ -108,6 +108,16 @@ public class CombinedChartActivity extends DemoBase {
         return R.layout.activity_combined;
     }
 
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
     private LineData generateLineData() {
 
         LineData d = new LineData();

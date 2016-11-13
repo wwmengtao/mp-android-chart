@@ -50,6 +50,16 @@ public class ScrollViewActivity extends DemoBase {
         return R.layout.activity_scrollview;
     }
 
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
     private void setData(int count) {
         
         ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();

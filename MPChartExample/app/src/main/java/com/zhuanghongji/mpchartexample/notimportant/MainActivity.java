@@ -304,7 +304,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void initToolbar() {
+    protected void initViews() {
         mToolbar.setTitle("MPAndroidChart Example");
         mToolbar.inflateMenu(R.menu.main);
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -339,6 +339,11 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void initEvents() {
+
     }
 
 }

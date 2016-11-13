@@ -50,6 +50,16 @@ public class SimpleChartDemo extends DemoBase {
         return R.layout.activity_awesomedesign;
     }
 
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
     private class PageAdapter extends FragmentPagerAdapter {
 
         public PageAdapter(FragmentManager fm) {

@@ -37,6 +37,16 @@ public class RealmDatabaseActivityBar extends RealmBaseActivity {
     }
 
     @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume(); // setup realm
 

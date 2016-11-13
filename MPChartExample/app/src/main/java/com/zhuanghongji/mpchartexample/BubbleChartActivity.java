@@ -93,6 +93,16 @@ public class BubbleChartActivity extends DemoBase implements OnSeekBarChangeList
     }
 
     @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initEvents() {
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bubble, menu);
         return true;
