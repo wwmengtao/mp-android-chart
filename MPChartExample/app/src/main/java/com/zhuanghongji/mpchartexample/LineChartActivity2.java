@@ -63,14 +63,9 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initEvents();
         mSeekBarX.setProgress(45);
         mSeekBarY.setProgress(100);
-
-        mSeekBarY.setOnSeekBarChangeListener(this);
-        mSeekBarX.setOnSeekBarChangeListener(this);
-
-        mChart = (LineChart) findViewById(R.id.chart1);
-        mChart.setOnChartValueSelectedListener(this);
 
         // no description text
         mChart.getDescription().setEnabled(false);
@@ -134,6 +129,12 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
         rightAxis.setDrawGridLines(false);
         rightAxis.setDrawZeroLine(false);
         rightAxis.setGranularityEnabled(false);
+    }
+
+    private void initEvents() {
+        mSeekBarY.setOnSeekBarChangeListener(this);
+        mSeekBarX.setOnSeekBarChangeListener(this);
+        mChart.setOnChartValueSelectedListener(this);
     }
 
     @Override
@@ -309,17 +310,14 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
     }
 
     private void setData(int count, float range) {
-
-        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
-
+        ArrayList<Entry> yVals1 = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             float mult = range / 2f;
             float val = (float) (Math.random() * mult) + 50;
             yVals1.add(new Entry(i, val));
         }
 
-        ArrayList<Entry> yVals2 = new ArrayList<Entry>();
-
+        ArrayList<Entry> yVals2 = new ArrayList<>();
         for (int i = 0; i < count - 1; i++) {
             float mult = range;
             float val = (float) (Math.random() * mult) + 450;
@@ -329,8 +327,7 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
 //            }
         }
 
-        ArrayList<Entry> yVals3 = new ArrayList<Entry>();
-
+        ArrayList<Entry> yVals3 = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             float mult = range;
             float val = (float) (Math.random() * mult) + 500;
@@ -338,7 +335,6 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
         }
 
         LineDataSet set1, set2, set3;
-
         if (mChart.getData() != null &&
                 mChart.getData().getDataSetCount() > 0) {
             set1 = (LineDataSet) mChart.getData().getDataSetByIndex(0);
@@ -352,7 +348,6 @@ public class LineChartActivity2 extends DemoBase implements OnSeekBarChangeListe
         } else {
             // create a dataset and give it a type
             set1 = new LineDataSet(yVals1, "DataSet 1");
-
             set1.setAxisDependency(AxisDependency.LEFT);
             set1.setColor(ColorTemplate.getHoloBlue());
             set1.setCircleColor(Color.WHITE);

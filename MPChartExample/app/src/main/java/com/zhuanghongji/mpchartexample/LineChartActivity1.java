@@ -70,14 +70,11 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initEvents();
+        // 先为SeekBar设置ChangeListener，这样setProgress时也会触发
         mSeekBarX.setProgress(45);
         mSeekBarY.setProgress(100);
 
-        mSeekBarY.setOnSeekBarChangeListener(this);
-        mSeekBarX.setOnSeekBarChangeListener(this);
-
-        mChart.setOnChartGestureListener(this);
-        mChart.setOnChartValueSelectedListener(this);
         mChart.setDrawGridBackground(false);
 
         // no description text
@@ -114,7 +111,7 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
         XAxis xAxis = mChart.getXAxis();
         xAxis.enableGridDashedLine(10f, 10f, 0f);
         //xAxis.setValueFormatter(new MyCustomXAxisValueFormatter());
-        //xAxis.addLimitLine(llXAxis); // add x-axis limit line
+        //xAxis.addLimitLine(llXAxis); // add x-axis limit line 这里注释了添加X轴限制线的代码
 
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
@@ -171,6 +168,14 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
         // mChart.invalidate();
     }
 
+    private void initEvents() {
+        mSeekBarY.setOnSeekBarChangeListener(this);
+        mSeekBarX.setOnSeekBarChangeListener(this);
+
+        mChart.setOnChartGestureListener(this);
+        mChart.setOnChartValueSelectedListener(this);
+    }
+
     @Override
     protected int getLayoutResID() {
         return R.layout.activity_linechart;
@@ -197,7 +202,6 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
                                 .getDataSets();
 
                         for (ILineDataSet iSet : sets) {
-
                             LineDataSet set = (LineDataSet) iSet;
                             set.setDrawValues(!set.isDrawValuesEnabled());
                         }
@@ -213,12 +217,10 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
                         break;
                     }
                     case R.id.actionToggleFilled: {
-
                         List<ILineDataSet> sets = mChart.getData()
                                 .getDataSets();
 
                         for (ILineDataSet iSet : sets) {
-
                             LineDataSet set = (LineDataSet) iSet;
                             if (set.isDrawFilledEnabled())
                                 set.setDrawFilled(false);
@@ -248,7 +250,6 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
                                 .getDataSets();
 
                         for (ILineDataSet iSet : sets) {
-
                             LineDataSet set = (LineDataSet) iSet;
                             set.setMode(set.getMode() == LineDataSet.Mode.CUBIC_BEZIER
                                     ? LineDataSet.Mode.LINEAR
@@ -262,7 +263,6 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
                                 .getDataSets();
 
                         for (ILineDataSet iSet : sets) {
-
                             LineDataSet set = (LineDataSet) iSet;
                             set.setMode(set.getMode() == LineDataSet.Mode.STEPPED
                                     ? LineDataSet.Mode.LINEAR
@@ -276,7 +276,6 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
                                 .getDataSets();
 
                         for (ILineDataSet iSet : sets) {
-
                             LineDataSet set = (LineDataSet) iSet;
                             set.setMode(set.getMode() == LineDataSet.Mode.HORIZONTAL_BEZIER
                                     ? LineDataSet.Mode.LINEAR
@@ -358,11 +357,8 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
     }
 
     private void setData(int count, float range) {
-
-        ArrayList<Entry> values = new ArrayList<Entry>();
-
+        ArrayList<Entry> values = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-
             float val = (float) (Math.random() * range) + 3;
             values.add(new Entry(i, val));
         }
@@ -401,7 +397,7 @@ public class LineChartActivity1 extends DemoBase implements OnSeekBarChangeListe
                 set1.setFillColor(Color.BLACK);
             }
 
-            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.add(set1); // add the datasets
 
             // create a data object with the datasets
