@@ -3,6 +3,7 @@ package com.zhuanghongji.mpchartexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,18 +32,24 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class StackedBarActivityNegative extends DemoBase implements
         OnChartValueSelectedListener {
 
-    private HorizontalBarChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    HorizontalBarChart mChart;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle("Age Distribution Austria");
+//        setTitle("Age Distribution Austria");
 
-        mChart = (HorizontalBarChart) findViewById(R.id.chart1);
         mChart.setOnChartValueSelectedListener(this);
         mChart.setDrawGridBackground(false);
         mChart.getDescription().setEnabled(false);
@@ -135,89 +142,82 @@ public class StackedBarActivityNegative extends DemoBase implements
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_10_name,R.string.ci_10_desc,R.menu.bar,true);
     }
 
     @Override
     protected void initEvents() {
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.actionToggleValues: {
+                        List<IBarDataSet> sets = mChart.getData()
+                                .getDataSets();
 
-    }
+                        for (IBarDataSet iSet : sets) {
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.bar, menu);
-        return true;
-    }
+                            BarDataSet set = (BarDataSet) iSet;
+                            set.setDrawValues(!set.isDrawValuesEnabled());
+                        }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleHighlight: {
+                        if(mChart.getData() != null) {
+                            mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
+                            mChart.invalidate();
+                        }
+                        break;
+                    }
+                    case R.id.actionTogglePinch: {
+                        if (mChart.isPinchZoomEnabled())
+                            mChart.setPinchZoom(false);
+                        else
+                            mChart.setPinchZoom(true);
 
-        switch (item.getItemId()) {
-            case R.id.actionToggleValues: {
-                List<IBarDataSet> sets = mChart.getData()
-                        .getDataSets();
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleAutoScaleMinMax: {
+                        mChart.setAutoScaleMinMaxEnabled(!mChart.isAutoScaleMinMaxEnabled());
+                        mChart.notifyDataSetChanged();
+                        break;
+                    }
+                    case R.id.actionToggleBarBorders: {
+                        for (IBarDataSet set : mChart.getData().getDataSets())
+                            ((BarDataSet)set).setBarBorderWidth(set.getBarBorderWidth() == 1.f ? 0.f : 1.f);
 
-                for (IBarDataSet iSet : sets) {
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.animateX: {
+                        mChart.animateX(3000);
+                        break;
+                    }
+                    case R.id.animateY: {
+                        mChart.animateY(3000);
+                        break;
+                    }
+                    case R.id.animateXY: {
 
-                    BarDataSet set = (BarDataSet) iSet;
-                    set.setDrawValues(!set.isDrawValuesEnabled());
+                        mChart.animateXY(3000, 3000);
+                        break;
+                    }
+                    case R.id.actionSave: {
+                        if (mChart.saveToGallery("title" + System.currentTimeMillis(), 50)) {
+                            Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!",
+                                    Toast.LENGTH_SHORT).show();
+                        } else
+                            Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT)
+                                    .show();
+                        break;
+                    }
                 }
-
-                mChart.invalidate();
-                break;
+                return true;
             }
-            case R.id.actionToggleHighlight: {
-                if(mChart.getData() != null) {
-                    mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
-                    mChart.invalidate();
-                }
-                break;
-            }
-            case R.id.actionTogglePinch: {
-                if (mChart.isPinchZoomEnabled())
-                    mChart.setPinchZoom(false);
-                else
-                    mChart.setPinchZoom(true);
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleAutoScaleMinMax: {
-                mChart.setAutoScaleMinMaxEnabled(!mChart.isAutoScaleMinMaxEnabled());
-                mChart.notifyDataSetChanged();
-                break;
-            }
-            case R.id.actionToggleBarBorders: {
-                for (IBarDataSet set : mChart.getData().getDataSets())
-                    ((BarDataSet)set).setBarBorderWidth(set.getBarBorderWidth() == 1.f ? 0.f : 1.f);
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.animateX: {
-                mChart.animateX(3000);
-                break;
-            }
-            case R.id.animateY: {
-                mChart.animateY(3000);
-                break;
-            }
-            case R.id.animateXY: {
-
-                mChart.animateXY(3000, 3000);
-                break;
-            }
-            case R.id.actionSave: {
-                if (mChart.saveToGallery("title" + System.currentTimeMillis(), 50)) {
-                    Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!",
-                            Toast.LENGTH_SHORT).show();
-                } else
-                    Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT)
-                            .show();
-                break;
-            }
-        }
-        return true;
+        });
     }
 
     @Override

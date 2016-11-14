@@ -145,9 +145,13 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
 
     @Override
     protected void initViews() {
-        mToolbar.setTitle(R.string.ci_2_desc);
-        mToolbar.setSubtitle(R.string.ci_3_desc);
-        mToolbar.inflateMenu(R.menu.bar);
+        setupToolbar(mToolbar,R.string.ci_2_name,R.string.ci_2_desc,R.menu.bar,true);
+    }
+
+    @Override
+    protected void initEvents() {
+        mChart.setOnChartValueSelectedListener(this);
+
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -213,11 +217,6 @@ public class BarChartActivity extends DemoBase implements OnSeekBarChangeListene
                 return true;
             }
         });
-    }
-
-    @Override
-    protected void initEvents() {
-        mChart.setOnChartValueSelectedListener(this);
     }
 
     @Override

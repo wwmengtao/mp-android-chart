@@ -4,6 +4,7 @@ package com.zhuanghongji.mpchartexample;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -15,24 +16,27 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.BindViews;
+
 public class LineChartActivityColored extends DemoBase {
 
-    private LineChart[] mCharts = new LineChart[4];
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindViews({R.id.chart1, R.id.chart2, R.id.chart3, R.id.chart4})
+    LineChart[] mCharts;
+
     private Typeface mTf;
 
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mCharts[0] = (LineChart) findViewById(R.id.chart1);
-        mCharts[1] = (LineChart) findViewById(R.id.chart2);
-        mCharts[2] = (LineChart) findViewById(R.id.chart3);
-        mCharts[3] = (LineChart) findViewById(R.id.chart4);
-
         mTf = Typeface.createFromAsset(getAssets(), "OpenSans-Bold.ttf");
 
         for (int i = 0; i < mCharts.length; i++) {
-
             LineData data = getData(36, 100);
             data.setValueTypeface(mTf);
 
@@ -48,7 +52,7 @@ public class LineChartActivityColored extends DemoBase {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar, R.string.ci_21_name, R.string.ci_21_desc, 0, true);
     }
 
     @Override
@@ -56,7 +60,7 @@ public class LineChartActivityColored extends DemoBase {
 
     }
 
-    private int[] mColors = new int[] {
+    private int[] mColors = new int[]{
             Color.rgb(137, 230, 81),
             Color.rgb(240, 240, 30),
             Color.rgb(89, 199, 250),
@@ -69,7 +73,7 @@ public class LineChartActivityColored extends DemoBase {
 
         // no description text
         chart.getDescription().setEnabled(false);
-        
+
         // mChart.setDrawHorizontalGrid(false);
         //
         // enable / disable grid background
@@ -87,7 +91,7 @@ public class LineChartActivityColored extends DemoBase {
         chart.setPinchZoom(false);
 
         chart.setBackgroundColor(color);
-        
+
         // set custom chart offsets (automatic offset calculation is hereby disabled)
         chart.setViewPortOffsets(10, 0, 10, 0);
 
@@ -108,7 +112,7 @@ public class LineChartActivityColored extends DemoBase {
         // animate calls invalidate()...
         chart.animateX(2500);
     }
-    
+
     private LineData getData(int count, float range) {
 
         ArrayList<Entry> yVals = new ArrayList<Entry>();

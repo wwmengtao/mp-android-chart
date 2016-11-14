@@ -4,6 +4,7 @@ package com.zhuanghongji.mpchartexample;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -12,6 +13,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.CandleStickChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.XAxis.XAxisPosition;
@@ -25,26 +27,33 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 public class CandleStickChartActivity extends DemoBase implements OnSeekBarChangeListener {
 
-    private CandleStickChart mChart;
-    private SeekBar mSeekBarX, mSeekBarY;
-    private TextView tvX, tvY;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    CandleStickChart mChart;
+
+    @BindView(R.id.seekBar1)
+    SeekBar mSeekBarX;
+
+    @BindView(R.id.seekBar2)
+    SeekBar mSeekBarY;
+
+    @BindView(R.id.tvXMax)
+    TextView tvX;
+
+    @BindView(R.id.tvYMax)
+    TextView tvY;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        tvX = (TextView) findViewById(R.id.tvXMax);
-        tvY = (TextView) findViewById(R.id.tvYMax);
-
-        mSeekBarX = (SeekBar) findViewById(R.id.seekBar1);
-        mSeekBarX.setOnSeekBarChangeListener(this);
-
-        mSeekBarY = (SeekBar) findViewById(R.id.seekBar2);
-        mSeekBarY.setOnSeekBarChangeListener(this);
-
-        mChart = (CandleStickChart) findViewById(R.id.chart1);
         mChart.setBackgroundColor(Color.WHITE);
 
         mChart.getDescription().setEnabled(false);
@@ -86,82 +95,77 @@ public class CandleStickChartActivity extends DemoBase implements OnSeekBarChang
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_18_name,R.string.ci_18_desc,R.menu.candle,true);
     }
 
     @Override
     protected void initEvents() {
+        mSeekBarX.setOnSeekBarChangeListener(this);
+        mSeekBarY.setOnSeekBarChangeListener(this);
 
-    }
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.actionToggleHighlight: {
+                        if(mChart.getData() != null) {
+                            mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
+                            mChart.invalidate();
+                        }
+                        break;
+                    }
+                    case R.id.actionTogglePinch: {
+                        if (mChart.isPinchZoomEnabled())
+                            mChart.setPinchZoom(false);
+                        else
+                            mChart.setPinchZoom(true);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.candle, menu);
-        return true;
-    }
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleAutoScaleMinMax: {
+                        mChart.setAutoScaleMinMaxEnabled(!mChart.isAutoScaleMinMaxEnabled());
+                        mChart.notifyDataSetChanged();
+                        break;
+                    }
+                    case R.id.actionToggleMakeShadowSameColorAsCandle: {
+                        for (ICandleDataSet set : mChart.getData().getDataSets()) {
+                            //TODO: set.setShadowColorSameAsCandle(!set.getShadowColorSameAsCandle());
+                        }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.animateX: {
+                        mChart.animateX(3000);
+                        break;
+                    }
+                    case R.id.animateY: {
+                        mChart.animateY(3000);
+                        break;
+                    }
+                    case R.id.animateXY: {
 
-        switch (item.getItemId()) {
-            case R.id.actionToggleHighlight: {
-                if(mChart.getData() != null) {
-                    mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
-                    mChart.invalidate();
+                        mChart.animateXY(3000, 3000);
+                        break;
+                    }
+                    case R.id.actionSave: {
+                        if (mChart.saveToGallery("title" + System.currentTimeMillis(), 50)) {
+                            Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!",
+                                    Toast.LENGTH_SHORT).show();
+                        } else
+                            Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT)
+                                    .show();
+                        break;
+                    }
                 }
-                break;
+                return true;
             }
-            case R.id.actionTogglePinch: {
-                if (mChart.isPinchZoomEnabled())
-                    mChart.setPinchZoom(false);
-                else
-                    mChart.setPinchZoom(true);
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleAutoScaleMinMax: {
-                mChart.setAutoScaleMinMaxEnabled(!mChart.isAutoScaleMinMaxEnabled());
-                mChart.notifyDataSetChanged();
-                break;
-            }
-            case R.id.actionToggleMakeShadowSameColorAsCandle: {
-                for (ICandleDataSet set : mChart.getData().getDataSets()) {
-                   //TODO: set.setShadowColorSameAsCandle(!set.getShadowColorSameAsCandle());
-                }
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.animateX: {
-                mChart.animateX(3000);
-                break;
-            }
-            case R.id.animateY: {
-                mChart.animateY(3000);
-                break;
-            }
-            case R.id.animateXY: {
-
-                mChart.animateXY(3000, 3000);
-                break;
-            }
-            case R.id.actionSave: {
-                if (mChart.saveToGallery("title" + System.currentTimeMillis(), 50)) {
-                    Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!",
-                            Toast.LENGTH_SHORT).show();
-                } else
-                    Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT)
-                            .show();
-                break;
-            }
-        }
-        return true;
+        });
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        
         int prog = (mSeekBarX.getProgress() + 1);
 
         tvX.setText("" + prog);
@@ -169,8 +173,7 @@ public class CandleStickChartActivity extends DemoBase implements OnSeekBarChang
         
         mChart.resetTracking();
 
-        ArrayList<CandleEntry> yVals1 = new ArrayList<CandleEntry>();
-
+        ArrayList<CandleEntry> yVals1 = new ArrayList<>();
         for (int i = 0; i < prog; i++) {
             float mult = (mSeekBarY.getProgress() + 1);
             float val = (float) (Math.random() * 40) + mult;

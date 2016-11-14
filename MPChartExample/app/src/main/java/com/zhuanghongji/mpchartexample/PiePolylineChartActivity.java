@@ -4,6 +4,7 @@ package com.zhuanghongji.mpchartexample;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
@@ -17,6 +18,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -32,31 +34,38 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 public class PiePolylineChartActivity extends DemoBase implements OnSeekBarChangeListener,
         OnChartValueSelectedListener {
 
-    private PieChart mChart;
-    private SeekBar mSeekBarX, mSeekBarY;
-    private TextView tvX, tvY;
-    
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.chart1)
+    PieChart mChart;
+
+    @BindView(R.id.seekBar1)
+    SeekBar mSeekBarX;
+
+    @BindView(R.id.seekBar2)
+    SeekBar mSeekBarY;
+
+    @BindView(R.id.tvXMax)
+    TextView tvX;
+
+    @BindView(R.id.tvYMax)
+    TextView tvY;
+
     private Typeface tf;
 
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        tvX = (TextView) findViewById(R.id.tvXMax);
-        tvY = (TextView) findViewById(R.id.tvYMax);
-
-        mSeekBarX = (SeekBar) findViewById(R.id.seekBar1);
-        mSeekBarY = (SeekBar) findViewById(R.id.seekBar2);
-
         mSeekBarY.setProgress(10);
 
-        mSeekBarX.setOnSeekBarChangeListener(this);
-        mSeekBarY.setOnSeekBarChangeListener(this);
-
-        mChart = (PieChart) findViewById(R.id.chart1);
         mChart.setUsePercentValues(true);
         mChart.getDescription().setEnabled(false);
         mChart.setExtraOffsets(5, 10, 5, 5);
@@ -112,76 +121,72 @@ public class PiePolylineChartActivity extends DemoBase implements OnSeekBarChang
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_6_name,R.string.ci_6_desc,R.menu.pie,true);
     }
 
     @Override
     protected void initEvents() {
+        mSeekBarX.setOnSeekBarChangeListener(this);
+        mSeekBarY.setOnSeekBarChangeListener(this);
 
-    }
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.actionToggleValues: {
+                        for (IDataSet<?> set : mChart.getData().getDataSets())
+                            set.setDrawValues(!set.isDrawValuesEnabled());
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.pie, menu);
-        return true;
-    }
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleHole: {
+                        if (mChart.isDrawHoleEnabled())
+                            mChart.setDrawHoleEnabled(false);
+                        else
+                            mChart.setDrawHoleEnabled(true);
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionDrawCenter: {
+                        if (mChart.isDrawCenterTextEnabled())
+                            mChart.setDrawCenterText(false);
+                        else
+                            mChart.setDrawCenterText(true);
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleXVals: {
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.actionToggleValues: {
-                for (IDataSet<?> set : mChart.getData().getDataSets())
-                    set.setDrawValues(!set.isDrawValuesEnabled());
-
-                mChart.invalidate();
-                break;
+                        mChart.setDrawEntryLabels(!mChart.isDrawEntryLabelsEnabled());
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionSave: {
+                        // mChart.saveToGallery("title"+System.currentTimeMillis());
+                        mChart.saveToPath("title" + System.currentTimeMillis(), "");
+                        break;
+                    }
+                    case R.id.actionTogglePercent:
+                        mChart.setUsePercentValues(!mChart.isUsePercentValuesEnabled());
+                        mChart.invalidate();
+                        break;
+                    case R.id.animateX: {
+                        mChart.animateX(1400);
+                        break;
+                    }
+                    case R.id.animateY: {
+                        mChart.animateY(1400);
+                        break;
+                    }
+                    case R.id.animateXY: {
+                        mChart.animateXY(1400, 1400);
+                        break;
+                    }
+                }
+                return true;
             }
-            case R.id.actionToggleHole: {
-                if (mChart.isDrawHoleEnabled())
-                    mChart.setDrawHoleEnabled(false);
-                else
-                    mChart.setDrawHoleEnabled(true);
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionDrawCenter: {
-                if (mChart.isDrawCenterTextEnabled())
-                    mChart.setDrawCenterText(false);
-                else
-                    mChart.setDrawCenterText(true);
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleXVals: {
-
-                mChart.setDrawEntryLabels(!mChart.isDrawEntryLabelsEnabled());
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionSave: {
-                // mChart.saveToGallery("title"+System.currentTimeMillis());
-                mChart.saveToPath("title" + System.currentTimeMillis(), "");
-                break;
-            }
-            case R.id.actionTogglePercent:
-                mChart.setUsePercentValues(!mChart.isUsePercentValuesEnabled());
-                mChart.invalidate();
-                break;
-            case R.id.animateX: {
-                mChart.animateX(1400);
-                break;
-            }
-            case R.id.animateY: {
-                mChart.animateY(1400);
-                break;
-            }
-            case R.id.animateXY: {
-                mChart.animateXY(1400, 1400);
-                break;
-            }
-        }
-        return true;
+        });
     }
 
     @Override
@@ -194,11 +199,9 @@ public class PiePolylineChartActivity extends DemoBase implements OnSeekBarChang
     }
 
     private void setData(int count, float range) {
-
         float mult = range;
 
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
-
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
         for (int i = 0; i < count; i++) {
@@ -210,7 +213,6 @@ public class PiePolylineChartActivity extends DemoBase implements OnSeekBarChang
         dataSet.setSelectionShift(5f);
 
         // add a lot of colors
-
         ArrayList<Integer> colors = new ArrayList<Integer>();
 
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
@@ -232,7 +234,6 @@ public class PiePolylineChartActivity extends DemoBase implements OnSeekBarChang
 
         dataSet.setColors(colors);
         //dataSet.setSelectionShift(0f);
-
 
         dataSet.setValueLinePart1OffsetPercentage(80.f);
         dataSet.setValueLinePart1Length(0.2f);

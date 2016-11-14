@@ -4,6 +4,7 @@ package com.zhuanghongji.mpchartexample;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Demonstrates the use of charts inside a ListView. IMPORTANT: provide a
  * specific height attribute for the chart inside your listview-item
@@ -33,13 +36,18 @@ import java.util.List;
  */
 public class ListViewBarChartActivity extends DemoBase {
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.listView1)
+    ListView lv;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ListView lv = (ListView) findViewById(R.id.listView1);
-
-        ArrayList<BarData> list = new ArrayList<BarData>();
+        ArrayList<BarData> list = new ArrayList<>();
 
         // 20 items
         for (int i = 0; i < 20; i++) {
@@ -57,7 +65,7 @@ public class ListViewBarChartActivity extends DemoBase {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_15_name,R.string.ci_15_desc,0,true);
     }
 
     @Override
@@ -73,21 +81,15 @@ public class ListViewBarChartActivity extends DemoBase {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
             BarData data = getItem(position);
 
-            ViewHolder holder = null;
-
+            ViewHolder holder;
             if (convertView == null) {
-
                 holder = new ViewHolder();
-
                 convertView = LayoutInflater.from(getContext()).inflate(
                         R.layout.list_item_barchart, null);
                 holder.chart = (BarChart) convertView.findViewById(R.id.chart);
-
                 convertView.setTag(holder);
-
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
@@ -136,9 +138,7 @@ public class ListViewBarChartActivity extends DemoBase {
      * @return
      */
     private BarData generateData(int cnt) {
-
-        ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
-
+        ArrayList<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             entries.add(new BarEntry(i, (float) (Math.random() * 70) + 30));
         }

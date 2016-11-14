@@ -3,9 +3,9 @@ package com.zhuanghongji.mpchartexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.CombinedChart.DrawOrder;
@@ -36,16 +36,23 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 public class CombinedChartActivity extends DemoBase {
 
-    private CombinedChart mChart;
-    private final int itemcount = 12;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    CombinedChart mChart;
+
+    private final int itemCount = 12;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mChart = (CombinedChart) findViewById(R.id.chart1);
         mChart.getDescription().setEnabled(false);
         mChart.setBackgroundColor(Color.WHITE);
         mChart.setDrawGridBackground(false);
@@ -110,7 +117,7 @@ public class CombinedChartActivity extends DemoBase {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_4_name,R.string.ci_4_desc,R.menu.combined,true);
     }
 
     @Override
@@ -124,7 +131,7 @@ public class CombinedChartActivity extends DemoBase {
 
         ArrayList<Entry> entries = new ArrayList<Entry>();
 
-        for (int index = 0; index < itemcount; index++)
+        for (int index = 0; index < itemCount; index++)
             entries.add(new Entry(index + 0.5f, getRandom(15, 5)));
 
         LineDataSet set = new LineDataSet(entries, "Line DataSet");
@@ -149,7 +156,7 @@ public class CombinedChartActivity extends DemoBase {
         ArrayList<BarEntry> entries1 = new ArrayList<BarEntry>();
         ArrayList<BarEntry> entries2 = new ArrayList<BarEntry>();
 
-        for (int index = 0; index < itemcount; index++) {
+        for (int index = 0; index < itemCount; index++) {
             entries1.add(new BarEntry(0, getRandom(25, 25)));
 
             // stacked
@@ -189,7 +196,7 @@ public class CombinedChartActivity extends DemoBase {
 
         ArrayList<Entry> entries = new ArrayList<Entry>();
 
-        for (float index = 0; index < itemcount; index += 0.5f)
+        for (float index = 0; index < itemCount; index += 0.5f)
             entries.add(new Entry(index + 0.25f, getRandom(10, 55)));
 
         ScatterDataSet set = new ScatterDataSet(entries, "Scatter DataSet");
@@ -208,7 +215,7 @@ public class CombinedChartActivity extends DemoBase {
 
         ArrayList<CandleEntry> entries = new ArrayList<CandleEntry>();
 
-        for (int index = 0; index < itemcount; index += 2)
+        for (int index = 0; index < itemCount; index += 2)
             entries.add(new CandleEntry(index + 1f, 90, 70, 85, 75f));
 
         CandleDataSet set = new CandleDataSet(entries, "Candle DataSet");
@@ -228,7 +235,7 @@ public class CombinedChartActivity extends DemoBase {
 
         ArrayList<BubbleEntry> entries = new ArrayList<BubbleEntry>();
 
-        for (int index = 0; index < itemcount; index++) {
+        for (int index = 0; index < itemCount; index++) {
             float y = getRandom(10, 105);
             float size = getRandom(100, 105);
             entries.add(new BubbleEntry(index + 0.5f, y, size));

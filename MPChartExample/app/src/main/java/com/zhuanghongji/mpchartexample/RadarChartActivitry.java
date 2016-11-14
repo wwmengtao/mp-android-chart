@@ -3,6 +3,7 @@ package com.zhuanghongji.mpchartexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -27,20 +28,28 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 public class RadarChartActivitry extends DemoBase {
 
-    private RadarChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    RadarChart mChart;
+
+    @BindView(R.id.textView)
+    TextView tv;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TextView tv = (TextView) findViewById(R.id.textView);
         tv.setTypeface(mTfLight);
         tv.setTextColor(Color.WHITE);
         tv.setBackgroundColor(Color.rgb(60, 65, 82));
 
-        mChart = (RadarChart) findViewById(R.id.chart1);
         mChart.setBackgroundColor(Color.rgb(60, 65, 82));
 
         mChart.getDescription().setEnabled(false);
@@ -111,121 +120,114 @@ public class RadarChartActivitry extends DemoBase {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_20_name,R.string.ci_20_desc,R.menu.radar,true);
     }
 
     @Override
     protected void initEvents() {
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.actionToggleValues: {
+                        for (IDataSet<?> set : mChart.getData().getDataSets())
+                            set.setDrawValues(!set.isDrawValuesEnabled());
 
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleHighlight: {
+                        if (mChart.getData() != null) {
+                            mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
+                            mChart.invalidate();
+                        }
+                        break;
+                    }
+                    case R.id.actionToggleRotate: {
+                        if (mChart.isRotationEnabled())
+                            mChart.setRotationEnabled(false);
+                        else
+                            mChart.setRotationEnabled(true);
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleFilled: {
+
+                        ArrayList<IRadarDataSet> sets = (ArrayList<IRadarDataSet>) mChart.getData()
+                                .getDataSets();
+
+                        for (IRadarDataSet set : sets) {
+                            if (set.isDrawFilledEnabled())
+                                set.setDrawFilled(false);
+                            else
+                                set.setDrawFilled(true);
+                        }
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleHighlightCircle: {
+
+                        ArrayList<IRadarDataSet> sets = (ArrayList<IRadarDataSet>) mChart.getData()
+                                .getDataSets();
+
+                        for (IRadarDataSet set : sets) {
+                            set.setDrawHighlightCircleEnabled(!set.isDrawHighlightCircleEnabled());
+                        }
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionSave: {
+                        if (mChart.saveToPath("title" + System.currentTimeMillis(), "")) {
+                            Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!",
+                                    Toast.LENGTH_SHORT).show();
+                        } else
+                            Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT)
+                                    .show();
+                        break;
+                    }
+                    case R.id.actionToggleXLabels: {
+                        mChart.getXAxis().setEnabled(!mChart.getXAxis().isEnabled());
+                        mChart.notifyDataSetChanged();
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleYLabels: {
+
+                        mChart.getYAxis().setEnabled(!mChart.getYAxis().isEnabled());
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.animateX: {
+                        mChart.animateX(1400);
+                        break;
+                    }
+                    case R.id.animateY: {
+                        mChart.animateY(1400);
+                        break;
+                    }
+                    case R.id.animateXY: {
+                        mChart.animateXY(1400, 1400);
+                        break;
+                    }
+                    case R.id.actionToggleSpin: {
+                        mChart.spin(2000, mChart.getRotationAngle(), mChart.getRotationAngle() + 360, Easing.EasingOption
+                                .EaseInCubic);
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.radar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.actionToggleValues: {
-                for (IDataSet<?> set : mChart.getData().getDataSets())
-                    set.setDrawValues(!set.isDrawValuesEnabled());
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleHighlight: {
-                if (mChart.getData() != null) {
-                    mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
-                    mChart.invalidate();
-                }
-                break;
-            }
-            case R.id.actionToggleRotate: {
-                if (mChart.isRotationEnabled())
-                    mChart.setRotationEnabled(false);
-                else
-                    mChart.setRotationEnabled(true);
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleFilled: {
-
-                ArrayList<IRadarDataSet> sets = (ArrayList<IRadarDataSet>) mChart.getData()
-                        .getDataSets();
-
-                for (IRadarDataSet set : sets) {
-                    if (set.isDrawFilledEnabled())
-                        set.setDrawFilled(false);
-                    else
-                        set.setDrawFilled(true);
-                }
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleHighlightCircle: {
-
-                ArrayList<IRadarDataSet> sets = (ArrayList<IRadarDataSet>) mChart.getData()
-                        .getDataSets();
-
-                for (IRadarDataSet set : sets) {
-                    set.setDrawHighlightCircleEnabled(!set.isDrawHighlightCircleEnabled());
-                }
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionSave: {
-                if (mChart.saveToPath("title" + System.currentTimeMillis(), "")) {
-                    Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!",
-                            Toast.LENGTH_SHORT).show();
-                } else
-                    Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT)
-                            .show();
-                break;
-            }
-            case R.id.actionToggleXLabels: {
-                mChart.getXAxis().setEnabled(!mChart.getXAxis().isEnabled());
-                mChart.notifyDataSetChanged();
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleYLabels: {
-
-                mChart.getYAxis().setEnabled(!mChart.getYAxis().isEnabled());
-                mChart.invalidate();
-                break;
-            }
-            case R.id.animateX: {
-                mChart.animateX(1400);
-                break;
-            }
-            case R.id.animateY: {
-                mChart.animateY(1400);
-                break;
-            }
-            case R.id.animateXY: {
-                mChart.animateXY(1400, 1400);
-                break;
-            }
-            case R.id.actionToggleSpin: {
-                mChart.spin(2000, mChart.getRotationAngle(), mChart.getRotationAngle() + 360, Easing.EasingOption
-                        .EaseInCubic);
-                break;
-            }
-        }
-        return true;
-    }
 
     public void setData() {
-
         float mult = 80;
         float min = 20;
         int cnt = 5;
 
-        ArrayList<RadarEntry> entries1 = new ArrayList<RadarEntry>();
-        ArrayList<RadarEntry> entries2 = new ArrayList<RadarEntry>();
+        ArrayList<RadarEntry> entries1 = new ArrayList<>();
+        ArrayList<RadarEntry> entries2 = new ArrayList<>();
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.

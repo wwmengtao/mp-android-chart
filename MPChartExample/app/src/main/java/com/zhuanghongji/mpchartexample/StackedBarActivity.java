@@ -2,6 +2,7 @@ package com.zhuanghongji.mpchartexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,26 +32,33 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 public class StackedBarActivity extends DemoBase implements OnSeekBarChangeListener, OnChartValueSelectedListener {
 
-    private BarChart mChart;
-    private SeekBar mSeekBarX, mSeekBarY;
-    private TextView tvX, tvY;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    BarChart mChart;
+
+    @BindView(R.id.seekBar1)
+    SeekBar mSeekBarX;
+
+    @BindView(R.id.seekBar2)
+    SeekBar mSeekBarY;
+
+    @BindView(R.id.tvXMax)
+    TextView tvX;
+
+    @BindView(R.id.tvYMax)
+    TextView tvY;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        tvX = (TextView) findViewById(R.id.tvXMax);
-        tvY = (TextView) findViewById(R.id.tvYMax);
-
-        mSeekBarX = (SeekBar) findViewById(R.id.seekBar1);
-        mSeekBarX.setOnSeekBarChangeListener(this);
-
-        mSeekBarY = (SeekBar) findViewById(R.id.seekBar2);
-        mSeekBarY.setOnSeekBarChangeListener(this);
-
-        mChart = (BarChart) findViewById(R.id.chart1);
         mChart.setOnChartValueSelectedListener(this);
 
         mChart.getDescription().setEnabled(false);
@@ -103,87 +111,83 @@ public class StackedBarActivity extends DemoBase implements OnSeekBarChangeListe
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_9_name,R.string.ci_9_desc,R.menu.bar,true);
     }
 
     @Override
     protected void initEvents() {
+        mSeekBarX.setOnSeekBarChangeListener(this);
+        mSeekBarY.setOnSeekBarChangeListener(this);
 
-    }
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.actionToggleValues: {
+                        List<IBarDataSet> sets = mChart.getData()
+                                .getDataSets();
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.bar, menu);
-        return true;
-    }
+                        for (IBarDataSet iSet : sets) {
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+                            BarDataSet set = (BarDataSet) iSet;
+                            set.setDrawValues(!set.isDrawValuesEnabled());
+                        }
 
-        switch (item.getItemId()) {
-            case R.id.actionToggleValues: {
-                List<IBarDataSet> sets = mChart.getData()
-                        .getDataSets();
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleHighlight: {
+                        if (mChart.getData() != null) {
+                            mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
+                            mChart.invalidate();
+                        }
+                        break;
+                    }
+                    case R.id.actionTogglePinch: {
+                        if (mChart.isPinchZoomEnabled())
+                            mChart.setPinchZoom(false);
+                        else
+                            mChart.setPinchZoom(true);
 
-                for (IBarDataSet iSet : sets) {
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleAutoScaleMinMax: {
+                        mChart.setAutoScaleMinMaxEnabled(!mChart.isAutoScaleMinMaxEnabled());
+                        mChart.notifyDataSetChanged();
+                        break;
+                    }
+                    case R.id.actionToggleBarBorders: {
+                        for (IBarDataSet set : mChart.getData().getDataSets())
+                            ((BarDataSet) set).setBarBorderWidth(set.getBarBorderWidth() == 1.f ? 0.f : 1.f);
 
-                    BarDataSet set = (BarDataSet) iSet;
-                    set.setDrawValues(!set.isDrawValuesEnabled());
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.animateX: {
+                        mChart.animateX(3000);
+                        break;
+                    }
+                    case R.id.animateY: {
+                        mChart.animateY(3000);
+                        break;
+                    }
+                    case R.id.animateXY: {
+
+                        mChart.animateXY(3000, 3000);
+                        break;
+                    }
+                    case R.id.actionSave: {
+                        if (mChart.saveToGallery("title" + System.currentTimeMillis(), 50)) {
+                            Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!", Toast.LENGTH_SHORT).show();
+                        } else
+                            Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
                 }
-
-                mChart.invalidate();
-                break;
+                return true;
             }
-            case R.id.actionToggleHighlight: {
-                if (mChart.getData() != null) {
-                    mChart.getData().setHighlightEnabled(!mChart.getData().isHighlightEnabled());
-                    mChart.invalidate();
-                }
-                break;
-            }
-            case R.id.actionTogglePinch: {
-                if (mChart.isPinchZoomEnabled())
-                    mChart.setPinchZoom(false);
-                else
-                    mChart.setPinchZoom(true);
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleAutoScaleMinMax: {
-                mChart.setAutoScaleMinMaxEnabled(!mChart.isAutoScaleMinMaxEnabled());
-                mChart.notifyDataSetChanged();
-                break;
-            }
-            case R.id.actionToggleBarBorders: {
-                for (IBarDataSet set : mChart.getData().getDataSets())
-                    ((BarDataSet) set).setBarBorderWidth(set.getBarBorderWidth() == 1.f ? 0.f : 1.f);
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.animateX: {
-                mChart.animateX(3000);
-                break;
-            }
-            case R.id.animateY: {
-                mChart.animateY(3000);
-                break;
-            }
-            case R.id.animateXY: {
-
-                mChart.animateXY(3000, 3000);
-                break;
-            }
-            case R.id.actionSave: {
-                if (mChart.saveToGallery("title" + System.currentTimeMillis(), 50)) {
-                    Toast.makeText(getApplicationContext(), "Saving SUCCESSFUL!", Toast.LENGTH_SHORT).show();
-                } else
-                    Toast.makeText(getApplicationContext(), "Saving FAILED!", Toast.LENGTH_SHORT).show();
-                break;
-            }
-        }
-        return true;
+        });
     }
 
     @Override
@@ -192,7 +196,7 @@ public class StackedBarActivity extends DemoBase implements OnSeekBarChangeListe
         tvX.setText("" + (mSeekBarX.getProgress() + 1));
         tvY.setText("" + (mSeekBarY.getProgress()));
 
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> yVals1 = new ArrayList<>();
 
         for (int i = 0; i < mSeekBarX.getProgress() + 1; i++) {
             float mult = (mSeekBarY.getProgress() + 1);

@@ -4,6 +4,7 @@ package com.zhuanghongji.mpchartexample;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -30,6 +31,8 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Demonstrates the use of charts inside a ListView. IMPORTANT: provide a
  * specific height attribute for the chart inside your listview-item
@@ -38,17 +41,21 @@ import java.util.List;
  */
 public class ListViewMultiChartActivity extends DemoBase {
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.listView1)
+    ListView lv;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ListView lv = (ListView) findViewById(R.id.listView1);
-
-        ArrayList<ChartItem> list = new ArrayList<ChartItem>();
+        ArrayList<ChartItem> list = new ArrayList<>();
 
         // 30 items
         for (int i = 0; i < 30; i++) {
-            
             if(i % 3 == 0) {
                 list.add(new LineChartItem(generateDataLine(i + 1), getApplicationContext()));
             } else if(i % 3 == 1) {
@@ -69,7 +76,7 @@ public class ListViewMultiChartActivity extends DemoBase {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_16_name,R.string.ci_16_desc,0,true);
     }
 
     @Override
@@ -107,9 +114,7 @@ public class ListViewMultiChartActivity extends DemoBase {
      * @return
      */
     private LineData generateDataLine(int cnt) {
-
-        ArrayList<Entry> e1 = new ArrayList<Entry>();
-
+        ArrayList<Entry> e1 = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             e1.add(new Entry(i, (int) (Math.random() * 65) + 40));
         }
@@ -170,9 +175,7 @@ public class ListViewMultiChartActivity extends DemoBase {
      * @return
      */
     private PieData generateDataPie(int cnt) {
-
-        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
-
+        ArrayList<PieEntry> entries = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             entries.add(new PieEntry((float) ((Math.random() * 70) + 30), "Quarter " + (i+1)));
         }
@@ -186,4 +189,5 @@ public class ListViewMultiChartActivity extends DemoBase {
         PieData cd = new PieData(d);
         return cd;
     }
+
 }

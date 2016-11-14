@@ -2,6 +2,7 @@ package com.zhuanghongji.mpchartexample.fragments;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -60,7 +61,7 @@ public class BarChartFrag extends SimpleFragment implements OnChartGestureListen
         xAxis.setEnabled(false);
         
         // programatically add the chart
-        FrameLayout parent = (FrameLayout) v.findViewById(R.id.parentLayout);
+        CardView parent = (CardView) v.findViewById(R.id.parentLayout);
         parent.addView(mChart);
         
         return v;
