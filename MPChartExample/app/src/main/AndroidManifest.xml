@@ -7,20 +7,18 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="MPExample"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".notimportant.MainActivity"
-            android:label="@string/app_name">
+            android:theme="@style/AppTheme.WelcomeTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LineChartActivity1"
-            android:parentActivityName=".notimportant.MainActivity"/> <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
+        <activity android:name=".LineChartActivity1"/>
         <activity android:name=".LineChartActivity2"/>
         <activity android:name=".LineChartTime"/>
         <activity android:name=".BarChartActivity"/>
@@ -62,8 +60,8 @@
         <activity android:name=".BarChartPositiveNegative"/>
         <activity android:name=".FilledLineActivity"/>
         <activity android:name=".HalfPieChartActivity"/>
-        <activity android:name=".notimportant.BaseActivity">
-        </activity>
-    </application>
+        <activity android:name=".AboutActivity"/>
+    <!--<activity android:name=".notimportant.BaseActivity">-->
+</application>
 
 </manifest>

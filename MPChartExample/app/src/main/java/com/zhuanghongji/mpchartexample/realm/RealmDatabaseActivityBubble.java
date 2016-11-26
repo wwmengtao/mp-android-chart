@@ -1,6 +1,7 @@
 package com.zhuanghongji.mpchartexample.realm;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -14,6 +15,7 @@ import com.zhuanghongji.mpchartexample.custom.RealmDemoData;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import io.realm.RealmResults;
 
 /**
@@ -21,13 +23,16 @@ import io.realm.RealmResults;
  */
 public class RealmDatabaseActivityBubble extends RealmBaseActivity {
 
-    private BubbleChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    BubbleChart mChart;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mChart = (BubbleChart) findViewById(R.id.chart1);
         setup(mChart);
 
         mChart.getXAxis().setDrawGridLines(false);
@@ -42,7 +47,7 @@ public class RealmDatabaseActivityBubble extends RealmBaseActivity {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.realm_ci_5_name,R.string.realm_ci_5_desc,0,true);
     }
 
     @Override
@@ -53,7 +58,6 @@ public class RealmDatabaseActivityBubble extends RealmBaseActivity {
     @Override
     protected void onResume() {
         super.onResume(); // setup realm
-
         // write some demo-data into the realm.io database
         writeToDBBubble(10);
 
@@ -62,7 +66,6 @@ public class RealmDatabaseActivityBubble extends RealmBaseActivity {
     }
 
     private void setData() {
-
         RealmResults<RealmDemoData> result = mRealm.where(RealmDemoData.class).findAll();
 
         RealmBubbleDataSet<RealmDemoData> set = new RealmBubbleDataSet<RealmDemoData>(result, "xValue", "yValue", "bubbleSize");
@@ -80,4 +83,5 @@ public class RealmDatabaseActivityBubble extends RealmBaseActivity {
         mChart.setData(data);
         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuart);
     }
+
 }

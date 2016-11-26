@@ -41,9 +41,7 @@ public class PerformanceLineChart extends DemoBase implements OnSeekBarChangeLis
 
         mTvCount.setText("500");
         mSeekBarValues.setProgress(500);
-        mSeekBarValues.setOnSeekBarChangeListener(this);
 
-        mChart = (LineChart) findViewById(R.id.chart1);
         mChart.setDrawGridBackground(false);
 
         // no description text
@@ -80,7 +78,7 @@ public class PerformanceLineChart extends DemoBase implements OnSeekBarChangeLis
 
     @Override
     protected void initEvents() {
-
+        mSeekBarValues.setOnSeekBarChangeListener(this);
     }
 
     @Override

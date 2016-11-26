@@ -2,6 +2,7 @@ package com.zhuanghongji.mpchartexample.realm;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -15,6 +16,7 @@ import com.zhuanghongji.mpchartexample.custom.RealmDemoData;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import io.realm.RealmResults;
 
 /**
@@ -22,13 +24,16 @@ import io.realm.RealmResults;
  */
 public class RealmDatabaseActivityHorizontalBar extends RealmBaseActivity {
 
-    private HorizontalBarChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    HorizontalBarChart mChart;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mChart = (HorizontalBarChart) findViewById(R.id.chart1);
         setup(mChart);
 
         mChart.getAxisLeft().setAxisMinimum(0f);
@@ -42,7 +47,7 @@ public class RealmDatabaseActivityHorizontalBar extends RealmBaseActivity {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.realm_ci_2_name,R.string.realm_ci_2_desc,0,true);
     }
 
     @Override
@@ -62,7 +67,6 @@ public class RealmDatabaseActivityHorizontalBar extends RealmBaseActivity {
     }
 
     private void setData() {
-
         RealmResults<RealmDemoData> result = mRealm.where(RealmDemoData.class).findAll();
 
         //RealmBarDataSet<RealmDemoData> set = new RealmBarDataSet<RealmDemoData>(result, "stackValues", "xIndex"); // normal entries
@@ -83,4 +87,5 @@ public class RealmDatabaseActivityHorizontalBar extends RealmBaseActivity {
         mChart.setData(data);
         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuart);
     }
+
 }

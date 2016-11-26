@@ -1,6 +1,7 @@
 package com.zhuanghongji.mpchartexample.realm;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -19,6 +20,7 @@ import com.zhuanghongji.mpchartexample.R;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import io.realm.RealmResults;
 
 
@@ -27,15 +29,20 @@ import io.realm.RealmResults;
  */
 public class RealmWikiExample extends RealmBaseActivity {
 
-    private LineChart lineChart;
-    private BarChart barChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.lineChart)
+    LineChart lineChart;
+
+    @BindView(R.id.barChart)
+    BarChart barChart;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        lineChart = (LineChart) findViewById(R.id.lineChart);
-        barChart = (BarChart) findViewById(R.id.barChart);
+        // TODO ZHUANGHONGJI when i repeat to enter this Activity , a crash happened
         setup(lineChart);
         setup(barChart);
 
@@ -59,7 +66,7 @@ public class RealmWikiExample extends RealmBaseActivity {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.realm_ci_8_name,R.string.realm_ci_8_desc,0,true);
     }
 
     @Override
@@ -70,7 +77,6 @@ public class RealmWikiExample extends RealmBaseActivity {
     @Override
     protected void onResume() {
         super.onResume(); // setup realm
-
         mRealm.beginTransaction();
 
         // write some demo-data into the realm.io database
@@ -92,11 +98,8 @@ public class RealmWikiExample extends RealmBaseActivity {
     }
 
     private void setData() {
-
         // LINE-CHART
         final RealmResults<Score> results = mRealm.where(Score.class).findAll();
-
-
         IAxisValueFormatter formatter = new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
@@ -147,4 +150,5 @@ public class RealmWikiExample extends RealmBaseActivity {
         barChart.setFitBars(true);
         barChart.animateY(1400, Easing.EasingOption.EaseInOutQuart);
     }
+
 }

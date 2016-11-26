@@ -1,6 +1,7 @@
 package com.zhuanghongji.mpchartexample.realm;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -14,6 +15,7 @@ import com.zhuanghongji.mpchartexample.custom.RealmDemoData;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import io.realm.RealmResults;
 
 /**
@@ -21,13 +23,17 @@ import io.realm.RealmResults;
  */
 public class RealmDatabaseActivityLine extends RealmBaseActivity {
 
-    private LineChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    LineChart mChart;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mChart = (LineChart) findViewById(R.id.chart1);
         setup(mChart);
 
         mChart.getAxisLeft().setAxisMaximum(150f);
@@ -43,7 +49,7 @@ public class RealmDatabaseActivityLine extends RealmBaseActivity {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.realm_ci_0_name,R.string.realm_ci_0_desc,0,true);
     }
 
     @Override
@@ -63,7 +69,6 @@ public class RealmDatabaseActivityLine extends RealmBaseActivity {
     }
 
     private void setData() {
-
         RealmResults<RealmDemoData> result = mRealm.where(RealmDemoData.class).findAll();
 
         RealmLineDataSet<RealmDemoData> set = new RealmLineDataSet<RealmDemoData>(result, "xValue", "yValue");
@@ -86,4 +91,5 @@ public class RealmDatabaseActivityLine extends RealmBaseActivity {
         mChart.setData(data);
         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuart);
     }
+
 }

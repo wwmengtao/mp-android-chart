@@ -74,5 +74,36 @@
     <string name="ci_31_name">Half PieChart</string>
     <string name="ci_31_desc">This demonstrates how to create a 180 degree PieChart.</string>
 
+    // About
+    <string name="about_name">About</string>
+    <string name="about_desc">Something about this sample app.</string>
+    <string name="about_text">
+        This sample app is base on \"https://github.com/PhilJay/MPAndroidChart/tree/master/MPChartExample\".\n\n
+        I only changed the ui and fixed some bug.\n\n
+        The repository of this sample app is \"https://github.com/zhuanghongji/MPAndroidChart/tree/master/MPChartExample\".\n\n
+        If you found some issue or advice , please let me know by \"problem report\" in the menu of MainActivity.\n\n
+        Optimized by zhuanghongji.\n\n
+    </string>
+
+    // Realm
+    <string name="realm_ci_0_name">Line Chart</string>
+    <string name="realm_ci_0_desc">Creating a LineChart with Realm.io database</string>
+    <string name="realm_ci_1_name">Bar Chart</string>
+    <string name="realm_ci_1_desc">Creating a BarChart with Realm.io database</string>
+    <string name="realm_ci_2_name">Horizontal Bar Chart</string>
+    <string name="realm_ci_2_desc">Creating a HorizontalBarChart with Realm.io database</string>
+    <string name="realm_ci_3_name">Scatter Chart</string>
+    <string name="realm_ci_3_desc">Creating a ScatterChart with Realm.io database</string>
+    <string name="realm_ci_4_name">Candle Stick Chart</string>
+    <string name="realm_ci_4_desc">Creating a CandleStickChart with Realm.io database</string>
+    <string name="realm_ci_5_name">Bubble Chart</string>
+    <string name="realm_ci_5_desc">Creating a BubbleChart with Realm.io database</string>
+    <string name="realm_ci_6_name">Pie Chart</string>
+    <string name="realm_ci_6_desc">Creating a PieChart with Realm.io database</string>
+    <string name="realm_ci_7_name">Radar Chart</string>
+    <string name="realm_ci_7_desc">Creating a RadarChart with Realm.io database</string>
+    <string name="realm_ci_8_name">Realm Wiki</string>
+    <string name="realm_ci_8_desc">This is the code related to the wiki entry about realm.io on the MPAndroidChart github page.</string>
+
 
 </resources>

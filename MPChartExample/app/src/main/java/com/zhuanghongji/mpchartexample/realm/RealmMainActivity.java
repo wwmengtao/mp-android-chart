@@ -1,8 +1,11 @@
 package com.zhuanghongji.mpchartexample.realm;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,42 +20,65 @@ import com.zhuanghongji.mpchartexample.notimportant.MyAdapter;
 
 import java.util.ArrayList;
 
+import butterknife.BindFloat;
+import butterknife.BindView;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 /**
  * Created by Philipp Jahoda on 07/12/15.
  */
-public class RealmMainActivity extends DemoBase implements AdapterView.OnItemClickListener {
+public class RealmMainActivity extends DemoBase {
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.listView1)
+    ListView lv;
+
+    private Context mContext;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle("Realm.io Examples");
+        mContext = this;
 
-        ArrayList<ContentItem> objects = new ArrayList<ContentItem>();
-
-        objects.add(new ContentItem("Line Chart", "Creating a LineChart with Realm.io database"));
-        objects.add(new ContentItem("Bar Chart",
-                "Creating a BarChart with Realm.io database"));
-        objects.add(new ContentItem("Horizontal Bar Chart",
-                "Creating a HorizontalBarChart with Realm.io database"));
-        objects.add(new ContentItem("Scatter Chart",
-                "Creating a ScatterChart with Realm.io database"));
-        objects.add(new ContentItem("Candle Stick Chart", "Creating a CandleStickChart with Realm.io database"));
-        objects.add(new ContentItem("Bubble Chart", "Creating a BubbleChart with Realm.io database"));
-        objects.add(new ContentItem("Pie Chart", "Creating a PieChart with Realm.io database"));
-        objects.add(new ContentItem("Radar Chart", "Creating a RadarChart with Realm.io database"));
-        objects.add(new ContentItem("Realm Wiki", "This is the code related to the wiki entry about realm.io on the MPAndroidChart github page."));
-
+        ArrayList<ContentItem> objects = new ArrayList<>();
+        objects.add(new ContentItem(
+                getString(R.string.realm_ci_0_name),
+                getString(R.string.realm_ci_0_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.realm_ci_1_name),
+                getString(R.string.realm_ci_1_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.realm_ci_2_name),
+                getString(R.string.realm_ci_2_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.realm_ci_3_name),
+                getString(R.string.realm_ci_3_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.realm_ci_4_name),
+                getString(R.string.realm_ci_4_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.realm_ci_5_name),
+                getString(R.string.realm_ci_5_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.realm_ci_6_name),
+                getString(R.string.realm_ci_6_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.realm_ci_7_name),
+                getString(R.string.realm_ci_7_desc)));
+        objects.add(new ContentItem(
+                getString(R.string.realm_ci_8_name),
+                getString(R.string.realm_ci_8_desc)));
         MyAdapter adapter = new MyAdapter(this, objects);
-
-        ListView lv = (ListView) findViewById(R.id.listView1);
         lv.setAdapter(adapter);
+        View footer = LayoutInflater.from(this).inflate(R.layout.tip_end,null);
+        lv.addFooterView(footer);
 
-        lv.setOnItemClickListener(this);
-
+        Realm.init(this);
         // Create a RealmConfiguration that saves the Realm file in the app's "files" directory.
         RealmConfiguration realmConfig = new RealmConfiguration.Builder().build();
         Realm.setDefaultConfiguration(realmConfig);
@@ -70,74 +96,64 @@ public class RealmMainActivity extends DemoBase implements AdapterView.OnItemCli
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_28_name,R.string.ci_28_desc,R.menu.realm,true);
     }
 
     @Override
     protected void initEvents() {
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://realm.io"));
+                startActivity(i);
 
+                return true;
+            }
+        });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                Intent i;
+                switch (pos) {
+                    case 0:
+                        i = new Intent(mContext, RealmDatabaseActivityLine.class);
+                        break;
+                    case 1:
+                        i = new Intent(mContext, RealmDatabaseActivityBar.class);
+                        break;
+                    case 2:
+                        i = new Intent(mContext, RealmDatabaseActivityHorizontalBar.class);
+                        break;
+                    case 3:
+                        i = new Intent(mContext, RealmDatabaseActivityScatter.class);
+                        break;
+                    case 4:
+                        i = new Intent(mContext, RealmDatabaseActivityCandle.class);
+                        break;
+                    case 5:
+                        i = new Intent(mContext, RealmDatabaseActivityBubble.class);
+                        break;
+                    case 6:
+                        i = new Intent(mContext, RealmDatabaseActivityPie.class);
+                        break;
+                    case 7:
+                        i = new Intent(mContext, RealmDatabaseActivityRadar.class);
+                        break;
+                    case 8:
+                        i = new Intent(mContext, RealmWikiExample.class);
+                        break;
+                    default:
+                        i = null;
+                        break;
+                }
+                if (i != null){
+                    startActivity(i);
+                    overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
+                }
+            }
+        });
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> av, View v, int pos, long arg3) {
-
-        Intent i;
-
-        switch (pos) {
-            case 0:
-                i = new Intent(this, RealmDatabaseActivityLine.class);
-                startActivity(i);
-                break;
-            case 1:
-                i = new Intent(this, RealmDatabaseActivityBar.class);
-                startActivity(i);
-                break;
-            case 2:
-                i = new Intent(this, RealmDatabaseActivityHorizontalBar.class);
-                startActivity(i);
-                break;
-            case 3:
-                i = new Intent(this, RealmDatabaseActivityScatter.class);
-                startActivity(i);
-                break;
-            case 4:
-                i = new Intent(this, RealmDatabaseActivityCandle.class);
-                startActivity(i);
-                break;
-            case 5:
-                i = new Intent(this, RealmDatabaseActivityBubble.class);
-                startActivity(i);
-                break;
-            case 6:
-                i = new Intent(this, RealmDatabaseActivityPie.class);
-                startActivity(i);
-                break;
-            case 7:
-                i = new Intent(this, RealmDatabaseActivityRadar.class);
-                startActivity(i);
-                break;
-            case 8:
-                i = new Intent(this, RealmWikiExample.class);
-                startActivity(i);
-                break;
-        }
-
-        overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.realm, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse("https://realm.io"));
-        startActivity(i);
-
-        return super.onOptionsItemSelected(item);
-    }
 }

@@ -2,6 +2,7 @@ package com.zhuanghongji.mpchartexample.realm;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
 
 import com.github.mikephil.charting.charts.RadarChart;
@@ -14,6 +15,7 @@ import com.zhuanghongji.mpchartexample.custom.RealmDemoData;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import io.realm.RealmResults;
 
 /**
@@ -21,13 +23,16 @@ import io.realm.RealmResults;
  */
 public class RealmDatabaseActivityRadar extends RealmBaseActivity {
 
-    private RadarChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    RadarChart mChart;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mChart = (RadarChart) findViewById(R.id.chart1);
         setup(mChart);
 
         mChart.getYAxis().setEnabled(false);
@@ -44,7 +49,7 @@ public class RealmDatabaseActivityRadar extends RealmBaseActivity {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.realm_ci_7_name,R.string.realm_ci_7_desc,0,true);
     }
 
     @Override
@@ -55,7 +60,6 @@ public class RealmDatabaseActivityRadar extends RealmBaseActivity {
     @Override
     protected void onResume() {
         super.onResume(); // setup realm
-
         // write some demo-data into the realm.io database
         writeToDB(7);
 
@@ -64,7 +68,6 @@ public class RealmDatabaseActivityRadar extends RealmBaseActivity {
     }
 
     private void setData() {
-
         RealmResults<RealmDemoData> result = mRealm.where(RealmDemoData.class).findAll();
 
         //RealmBarDataSet<RealmDemoData> set = new RealmBarDataSet<RealmDemoData>(result, "stackValues", "xIndex"); // normal entries
@@ -87,4 +90,5 @@ public class RealmDatabaseActivityRadar extends RealmBaseActivity {
         mChart.setData(data);
         mChart.animateY(1400);
     }
+
 }

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.utils.Utils;
+import com.zhuanghongji.mpchartexample.AboutActivity;
 import com.zhuanghongji.mpchartexample.AnotherBarActivity;
 import com.zhuanghongji.mpchartexample.BarChartActivity;
 import com.zhuanghongji.mpchartexample.BarChartActivityMultiDataset;
@@ -168,10 +169,7 @@ public class MainActivity extends BaseActivity {
                         i = new Intent(mContext, BarChartPositiveNegative.class);
                         break;
                     case 28:
-                        Toast.makeText(MainActivity.this,
-                                "有BUG 暂未修复 Thanks",Toast.LENGTH_SHORT).show();
-                        i = null;
-//                        i = new Intent(mContext, RealmMainActivity.class);
+                        i = new Intent(mContext, RealmMainActivity.class);
                         break;
                     case 29:
                         i = new Intent(mContext, LineChartTime.class);
@@ -181,6 +179,9 @@ public class MainActivity extends BaseActivity {
                         break;
                     case 31:
                         i = new Intent(mContext, HalfPieChartActivity.class);
+                        break;
+                    case 32:
+                        i = new Intent(mContext, AboutActivity.class);
                         break;
                     default:
                         i = null;
@@ -299,6 +300,11 @@ public class MainActivity extends BaseActivity {
         objects.add(new ContentItem(
                 getString(R.string.ci_31_name),
                 getString(R.string.ci_31_desc)));
+
+        // 关于
+        objects.add(new ContentItem(
+                getString(R.string.about_name),
+                getString(R.string.about_desc)));
         return objects;
     }
 
@@ -318,12 +324,12 @@ public class MainActivity extends BaseActivity {
                 switch (item.getItemId()) {
                     case R.id.viewGithub:
                         i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse("https://github.com/PhilJay/MPAndroidChart"));
+                        i.setData(Uri.parse("https://github.com/zhuanghongji/MPAndroidChart"));
                         startActivity(i);
                         break;
                     case R.id.report:
                         i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                                "mailto", "philjay.librarysup@gmail.com", null));
+                                "mailto", "377232403@qq.com", null));
                         i.putExtra(Intent.EXTRA_SUBJECT, "MPAndroidChart Issue");
                         i.putExtra(Intent.EXTRA_TEXT, "Your error report here...");
                         startActivity(Intent.createChooser(i, "Report Problem"));
@@ -335,7 +341,7 @@ public class MainActivity extends BaseActivity {
                         break;
                     case R.id.website:
                         i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse("http://at.linkedin.com/in/philippjahoda"));
+                        i.setData(Uri.parse("http://www.linkedin.com/in/zhuanghongji"));
                         startActivity(i);
                         break;
                 }

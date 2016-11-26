@@ -3,6 +3,7 @@ package com.zhuanghongji.mpchartexample.realm;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
@@ -16,6 +17,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.zhuanghongji.mpchartexample.R;
 import com.zhuanghongji.mpchartexample.custom.RealmDemoData;
 
+import butterknife.BindView;
 import io.realm.RealmResults;
 
 /**
@@ -23,13 +25,16 @@ import io.realm.RealmResults;
  */
 public class RealmDatabaseActivityPie extends RealmBaseActivity {
 
-    private PieChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    PieChart mChart;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mChart = (PieChart) findViewById(R.id.chart1);
         setup(mChart);
 
         mChart.setCenterText(generateCenterSpannableText());
@@ -42,7 +47,7 @@ public class RealmDatabaseActivityPie extends RealmBaseActivity {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.realm_ci_6_name,R.string.realm_ci_6_desc,0,true);
     }
 
     @Override
@@ -53,7 +58,6 @@ public class RealmDatabaseActivityPie extends RealmBaseActivity {
     @Override
     protected void onResume() {
         super.onResume(); // setup realm
-
         // write some demo-data into the realm.io database
         writeToDBPie();
 
@@ -62,7 +66,6 @@ public class RealmDatabaseActivityPie extends RealmBaseActivity {
     }
 
     private void setData() {
-
         RealmResults<RealmDemoData> result = mRealm.where(RealmDemoData.class).findAll();
 
         //RealmBarDataSet<RealmDemoData> set = new RealmBarDataSet<RealmDemoData>(result, "stackValues", "xIndex"); // normal entries
@@ -83,7 +86,6 @@ public class RealmDatabaseActivityPie extends RealmBaseActivity {
     }
 
     private SpannableString generateCenterSpannableText() {
-
         SpannableString s = new SpannableString("Realm.io\nmobile database");
         s.setSpan(new ForegroundColorSpan(Color.rgb(240, 115, 126)), 0, 8, 0);
         s.setSpan(new RelativeSizeSpan(2.2f), 0, 8, 0);
@@ -92,4 +94,5 @@ public class RealmDatabaseActivityPie extends RealmBaseActivity {
         s.setSpan(new RelativeSizeSpan(0.85f), 9, s.length(), 0);
         return s;
     }
+
 }

@@ -28,11 +28,10 @@ public abstract class RealmBaseActivity extends DemoBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Realm.io Examples");
+//        setTitle("Realm.io Examples");
     }
 
     protected void setup(Chart<?> chart) {
-
         mTf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
 
         // no description text
@@ -42,7 +41,6 @@ public abstract class RealmBaseActivity extends DemoBase {
         chart.setTouchEnabled(true);
 
         if (chart instanceof BarLineChartBase) {
-
             BarLineChartBase mChart = (BarLineChartBase) chart;
 
             mChart.setDrawGridBackground(false);
@@ -81,7 +79,6 @@ public abstract class RealmBaseActivity extends DemoBase {
     @Override
     protected void onResume() {
         super.onResume();
-
         // Create a RealmConfiguration that saves the Realm file in the app's "files" directory.
         RealmConfiguration realmConfig = new RealmConfiguration.Builder().build();
         Realm.setDefaultConfiguration(realmConfig);
@@ -96,15 +93,10 @@ public abstract class RealmBaseActivity extends DemoBase {
     }
 
     protected void writeToDB(int objectCount) {
-
         mRealm.beginTransaction();
-
         mRealm.delete(RealmDemoData.class);
-
         for (int i = 0; i < objectCount; i++) {
-
             float value = 40f + (float) (Math.random() * 60f);
-
             RealmDemoData d = new RealmDemoData(i, value);
             mRealm.copyToRealm(d);
         }
@@ -113,17 +105,12 @@ public abstract class RealmBaseActivity extends DemoBase {
     }
 
     protected void writeToDBStack(int objectCount) {
-
         mRealm.beginTransaction();
-
         mRealm.delete(RealmDemoData.class);
-
         for (int i = 0; i < objectCount; i++) {
-
             float val1 = 34f + (float) (Math.random() * 12.0f);
             float val2 = 34f + (float) (Math.random() * 12.0f);
             float[] stack = new float[]{val1, val2, 100 - val1 - val2};
-
             RealmDemoData d = new RealmDemoData(i, stack);
             mRealm.copyToRealm(d);
         }
@@ -132,13 +119,9 @@ public abstract class RealmBaseActivity extends DemoBase {
     }
 
     protected void writeToDBCandle(int objectCount) {
-
         mRealm.beginTransaction();
-
         mRealm.delete(RealmDemoData.class);
-
         for (int i = 0; i < objectCount; i++) {
-
             float mult = 50;
             float val = (float) (Math.random() * 40) + mult;
 
@@ -160,11 +143,8 @@ public abstract class RealmBaseActivity extends DemoBase {
     }
 
     protected void writeToDBBubble(int objectCount) {
-
         mRealm.beginTransaction();
-
         mRealm.delete(RealmDemoData.class);
-
         for (int i = 0; i < objectCount; i++) {
 
             float value = 30f + (float) (Math.random() * 100.0);
@@ -178,11 +158,8 @@ public abstract class RealmBaseActivity extends DemoBase {
     }
 
     protected void writeToDBPie() {
-
         mRealm.beginTransaction();
-
         mRealm.delete(RealmDemoData.class);
-
         float value1 = 15f + (float) (Math.random() * 8f);
         float value2 = 15f + (float) (Math.random() * 8f);
         float value3 = 15f + (float) (Math.random() * 8f);
@@ -199,4 +176,5 @@ public abstract class RealmBaseActivity extends DemoBase {
 
         mRealm.commitTransaction();
     }
+
 }
