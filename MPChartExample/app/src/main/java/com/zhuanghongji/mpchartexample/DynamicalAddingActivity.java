@@ -3,6 +3,7 @@ package com.zhuanghongji.mpchartexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -21,15 +22,21 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 public class DynamicalAddingActivity extends DemoBase implements OnChartValueSelectedListener {
 
-    private LineChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    LineChart mChart;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mChart = (LineChart) findViewById(R.id.chart1);
         mChart.setOnChartValueSelectedListener(this);
         mChart.setDrawGridBackground(false);
         mChart.getDescription().setEnabled(false);
@@ -49,23 +56,53 @@ public class DynamicalAddingActivity extends DemoBase implements OnChartValueSel
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_23_name,R.string.ci_23_desc,R.menu.dynamical,true);
     }
 
     @Override
     protected void initEvents() {
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.actionAddEntry:
+                        addEntry();
+                        Toast.makeText(DynamicalAddingActivity.this, "Entry added!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.actionRemoveEntry:
+                        removeLastEntry();
+                        Toast.makeText(DynamicalAddingActivity.this, "Entry removed!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.actionAddDataSet:
+                        addDataSet();
+                        Toast.makeText(DynamicalAddingActivity.this, "DataSet added!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.actionRemoveDataSet:
+                        removeDataSet();
+                        Toast.makeText(DynamicalAddingActivity.this, "DataSet removed!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.actionAddEmptyLineData:
+                        mChart.setData(new LineData());
+                        mChart.invalidate();
+                        Toast.makeText(DynamicalAddingActivity.this, "Empty data added!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.actionClear:
+                        mChart.clear();
+                        Toast.makeText(DynamicalAddingActivity.this, "Chart cleared!", Toast.LENGTH_SHORT).show();
+                        break;
+                }
 
+                return true;
+            }
+        });
     }
 
     int[] mColors = ColorTemplate.VORDIPLOM_COLORS;
 
     private void addEntry() {
-
         LineData data = mChart.getData();
-
         ILineDataSet set = data.getDataSetByIndex(0);
         // set.addEntry(...); // can be called as well
-
         if (set == null) {
             set = createSet();
             data.addDataSet(set);
@@ -90,15 +127,10 @@ public class DynamicalAddingActivity extends DemoBase implements OnChartValueSel
     }
 
     private void removeLastEntry() {
-
         LineData data = mChart.getData();
-
         if (data != null) {
-
             ILineDataSet set = data.getDataSetByIndex(0);
-
             if (set != null) {
-
 //                Entry e = set.getEntryForXValue(set.getEntryCount() - 1); // TODO
                 Entry e = set.getEntryForXValue(set.getEntryCount() - 1, 1f);
 
@@ -113,15 +145,10 @@ public class DynamicalAddingActivity extends DemoBase implements OnChartValueSel
     }
 
     private void addDataSet() {
-
         LineData data = mChart.getData();
-
         if (data != null) {
-
             int count = (data.getDataSetCount() + 1);
-
-            ArrayList<Entry> yVals = new ArrayList<Entry>();
-
+            ArrayList<Entry> yVals = new ArrayList<>();
             for (int i = 0; i < data.getEntryCount(); i++) {
                 yVals.add(new Entry(i, (float) (Math.random() * 50f) + 50f * count));
             }
@@ -146,13 +173,9 @@ public class DynamicalAddingActivity extends DemoBase implements OnChartValueSel
     }
 
     private void removeDataSet() {
-
         LineData data = mChart.getData();
-
         if (data != null) {
-
             data.removeDataSet(data.getDataSetByIndex(data.getDataSetCount() - 1));
-
             mChart.notifyDataSetChanged();
             mChart.invalidate();
         }
@@ -168,48 +191,7 @@ public class DynamicalAddingActivity extends DemoBase implements OnChartValueSel
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.dynamical, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.actionAddEntry:
-                addEntry();
-                Toast.makeText(this, "Entry added!", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.actionRemoveEntry:
-                removeLastEntry();
-                Toast.makeText(this, "Entry removed!", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.actionAddDataSet:
-                addDataSet();
-                Toast.makeText(this, "DataSet added!", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.actionRemoveDataSet:
-                removeDataSet();
-                Toast.makeText(this, "DataSet removed!", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.actionAddEmptyLineData:
-                mChart.setData(new LineData());
-                mChart.invalidate();
-                Toast.makeText(this, "Empty data added!", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.actionClear:
-                mChart.clear();
-                Toast.makeText(this, "Chart cleared!", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-        return true;
-    }
-
     private LineDataSet createSet() {
-
         LineDataSet set = new LineDataSet(null, "DataSet 1");
         set.setLineWidth(2.5f);
         set.setCircleRadius(4.5f);

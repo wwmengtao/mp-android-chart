@@ -3,6 +3,7 @@ package com.zhuanghongji.mpchartexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,16 +25,24 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 
+import butterknife.BindView;
+
+import static android.R.attr.data;
+
 public class RealtimeLineChartActivity extends DemoBase implements
         OnChartValueSelectedListener {
 
-    private LineChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    LineChart mChart;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mChart = (LineChart) findViewById(R.id.chart1);
         mChart.setOnChartValueSelectedListener(this);
 
         // enable description text
@@ -93,47 +102,41 @@ public class RealtimeLineChartActivity extends DemoBase implements
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar, R.string.ci_22_name, R.string.ci_22_desc, R.menu.realtime, true);
     }
 
     @Override
     protected void initEvents() {
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.realtime, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.actionAdd: {
-                addEntry();
-                break;
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.actionAdd: {
+                        addEntry();
+                        break;
+                    }
+                    case R.id.actionClear: {
+                        mChart.clearValues();
+                        Toast.makeText(RealtimeLineChartActivity.this, "Chart cleared!", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case R.id.actionFeedMultiple: {
+                        feedMultiple();
+                        break;
+                    }
+                }
+                return true;
             }
-            case R.id.actionClear: {
-                mChart.clearValues();
-                Toast.makeText(this, "Chart cleared!", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.actionFeedMultiple: {
-                feedMultiple();
-                break;
-            }
-        }
-        return true;
+        });
     }
 
     private void addEntry() {
+        if (mChart == null){
+            return;
+        }
 
         LineData data = mChart.getData();
-
         if (data != null) {
-
             ILineDataSet set = data.getDataSetByIndex(0);
             // set.addEntry(...); // can be called as well
 
@@ -162,7 +165,6 @@ public class RealtimeLineChartActivity extends DemoBase implements
     }
 
     private LineDataSet createSet() {
-
         LineDataSet set = new LineDataSet(null, "Dynamic Data");
         set.setAxisDependency(AxisDependency.LEFT);
         set.setColor(ColorTemplate.getHoloBlue());
@@ -181,12 +183,10 @@ public class RealtimeLineChartActivity extends DemoBase implements
     private Thread thread;
 
     private void feedMultiple() {
-
         if (thread != null)
             thread.interrupt();
 
         final Runnable runnable = new Runnable() {
-
             @Override
             public void run() {
                 addEntry();
@@ -198,10 +198,8 @@ public class RealtimeLineChartActivity extends DemoBase implements
             @Override
             public void run() {
                 for (int i = 0; i < 1000; i++) {
-
                     // Don't generate garbage runnables inside the loop.
                     runOnUiThread(runnable);
-
                     try {
                         Thread.sleep(25);
                     } catch (InterruptedException e) {

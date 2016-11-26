@@ -4,7 +4,7 @@ package com.zhuanghongji.mpchartexample;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.WindowManager;
+import android.support.v7.widget.Toolbar;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -24,11 +24,21 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
+import static com.zhuanghongji.mpchartexample.R.styleable.Toolbar;
+
 public class BarChartPositiveNegative extends DemoBase {
 
-    protected BarChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.chart1)
+    BarChart mChart;
+
     private Typeface mTf;
 
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +114,7 @@ public class BarChartPositiveNegative extends DemoBase {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_27_name,R.string.ci_27_desc,0,true);
     }
 
     @Override
@@ -113,7 +123,6 @@ public class BarChartPositiveNegative extends DemoBase {
     }
 
     private void setData(List<Data> dataList) {
-
         ArrayList<BarEntry> values = new ArrayList<BarEntry>();
         List<Integer> colors = new ArrayList<Integer>();
 
@@ -134,7 +143,6 @@ public class BarChartPositiveNegative extends DemoBase {
         }
 
         BarDataSet set;
-
         if (mChart.getData() != null &&
                 mChart.getData().getDataSetCount() > 0) {
             set = (BarDataSet)mChart.getData().getDataSetByIndex(0);
@@ -161,7 +169,6 @@ public class BarChartPositiveNegative extends DemoBase {
      * Demo class representing data.
      */
     private class Data {
-
         public String xAxisValue;
         public float yValue;
         public float xValue;
@@ -173,9 +180,7 @@ public class BarChartPositiveNegative extends DemoBase {
         }
     }
 
-    private class ValueFormatter implements IValueFormatter
-    {
-
+    private class ValueFormatter implements IValueFormatter {
         private DecimalFormat mFormat;
 
         public ValueFormatter() {
@@ -187,4 +192,5 @@ public class BarChartPositiveNegative extends DemoBase {
             return mFormat.format(value);
         }
     }
+
 }

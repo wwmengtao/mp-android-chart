@@ -3,6 +3,7 @@ package com.zhuanghongji.mpchartexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -19,16 +20,23 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 public class FilledLineActivity extends DemoBase {
 
-    private LineChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.chart1)
+    LineChart mChart;
+
     private int mFillColor = Color.argb(150, 51, 181, 229);
 
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mChart = (LineChart) findViewById(R.id.chart1);
         mChart.setBackgroundColor(Color.WHITE);
         mChart.setGridBackgroundColor(mFillColor);
         mChart.setDrawGridBackground(true);
@@ -69,7 +77,7 @@ public class FilledLineActivity extends DemoBase {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_30_name,R.string.ci_30_desc,0,true);
     }
 
     @Override
@@ -78,9 +86,7 @@ public class FilledLineActivity extends DemoBase {
     }
 
     private void setData(int count, float range) {
-
         ArrayList<Entry> yVals1 = new ArrayList<Entry>();
-
         for (int i = 0; i < count; i++) {
             float val = (float) (Math.random() * range) + 50;// + (float)
             // ((mult *
@@ -89,7 +95,6 @@ public class FilledLineActivity extends DemoBase {
         }
 
         ArrayList<Entry> yVals2 = new ArrayList<Entry>();
-
         for (int i = 0; i < count; i++) {
             float val = (float) (Math.random() * range) + 450;// + (float)
             // ((mult *
@@ -98,7 +103,6 @@ public class FilledLineActivity extends DemoBase {
         }
 
         LineDataSet set1, set2;
-
         if (mChart.getData() != null &&
                 mChart.getData().getDataSetCount() > 0) {
             set1 = (LineDataSet)mChart.getData().getDataSetByIndex(0);

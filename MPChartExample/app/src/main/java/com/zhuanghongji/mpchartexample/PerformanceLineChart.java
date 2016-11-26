@@ -3,6 +3,7 @@ package com.zhuanghongji.mpchartexample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -17,22 +18,29 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 public class PerformanceLineChart extends DemoBase implements OnSeekBarChangeListener {
 
-    private LineChart mChart;
-    private SeekBar mSeekBarValues;
-    private TextView mTvCount;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    LineChart mChart;
+
+    @BindView(R.id.seekbarValues)
+    SeekBar mSeekBarValues;
+
+    @BindView(R.id.tvValueCount)
+    TextView mTvCount;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mTvCount = (TextView) findViewById(R.id.tvValueCount);
-        mSeekBarValues = (SeekBar) findViewById(R.id.seekbarValues);
         mTvCount.setText("500");
-
         mSeekBarValues.setProgress(500);
-        
         mSeekBarValues.setOnSeekBarChangeListener(this);
 
         mChart = (LineChart) findViewById(R.id.chart1);
@@ -50,7 +58,7 @@ public class PerformanceLineChart extends DemoBase implements OnSeekBarChangeLis
 
         // if disabled, scaling can be done on x- and y-axis separately
         mChart.setPinchZoom(false);
-              
+
         mChart.getAxisLeft().setDrawGridLines(false);
         mChart.getAxisRight().setEnabled(false);
         mChart.getXAxis().setDrawGridLines(true);
@@ -67,7 +75,7 @@ public class PerformanceLineChart extends DemoBase implements OnSeekBarChangeLis
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar, R.string.ci_24_name, R.string.ci_24_desc, 0, true);
     }
 
     @Override
@@ -77,14 +85,13 @@ public class PerformanceLineChart extends DemoBase implements OnSeekBarChangeLis
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
         int count = mSeekBarValues.getProgress() + 1000;
         mTvCount.setText("" + count);
-        
+
         mChart.resetTracking();
 
         setData(count, 500f);
-       
+
         // redraw
         mChart.invalidate();
     }
@@ -102,20 +109,18 @@ public class PerformanceLineChart extends DemoBase implements OnSeekBarChangeLis
     }
 
     private void setData(int count, float range) {
-
         ArrayList<Entry> yVals = new ArrayList<Entry>();
-
         for (int i = 0; i < count; i++) {
             float mult = (range + 1);
             float val = (float) (Math.random() * mult) + 3;// + (float)
-                                                           // ((mult *
-                                                           // 0.1) / 10);
+            // ((mult *
+            // 0.1) / 10);
             yVals.add(new Entry(i * 0.001f, val));
         }
 
         // create a dataset and give it a type
         LineDataSet set1 = new LineDataSet(yVals, "DataSet 1");
-        
+
         set1.setColor(Color.BLACK);
         set1.setLineWidth(0.5f);
         set1.setDrawValues(false);
@@ -128,7 +133,7 @@ public class PerformanceLineChart extends DemoBase implements OnSeekBarChangeLis
 
         // set data
         mChart.setData(data);
-        
+
         // get the legend (only possible after setting data)
         Legend l = mChart.getLegend();
         l.setEnabled(false);

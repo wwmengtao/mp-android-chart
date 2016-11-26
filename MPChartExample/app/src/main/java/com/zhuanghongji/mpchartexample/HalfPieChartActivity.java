@@ -4,6 +4,7 @@ package com.zhuanghongji.mpchartexample;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
@@ -24,15 +25,21 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 public class HalfPieChartActivity extends DemoBase {
 
-    private PieChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    PieChart mChart;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mChart = (PieChart) findViewById(R.id.chart1);
         mChart.setBackgroundColor(Color.WHITE);
 
         moveOffScreen();
@@ -87,7 +94,7 @@ public class HalfPieChartActivity extends DemoBase {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_31_name,R.string.ci_31_desc,0,true);
     }
 
     @Override
@@ -96,9 +103,7 @@ public class HalfPieChartActivity extends DemoBase {
     }
 
     private void setData(int count, float range) {
-
         ArrayList<PieEntry> values = new ArrayList<PieEntry>();
-
         for (int i = 0; i < count; i++) {
             values.add(new PieEntry((float) ((Math.random() * range) + range / 5), mParties[i % mParties.length]));
         }
@@ -121,7 +126,6 @@ public class HalfPieChartActivity extends DemoBase {
     }
 
     private SpannableString generateCenterSpannableText() {
-
         SpannableString s = new SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda");
         s.setSpan(new RelativeSizeSpan(1.7f), 0, 14, 0);
         s.setSpan(new StyleSpan(Typeface.NORMAL), 14, s.length() - 15, 0);
@@ -133,7 +137,6 @@ public class HalfPieChartActivity extends DemoBase {
     }
 
     private void moveOffScreen() {
-
         Display display = getWindowManager().getDefaultDisplay();
         int height = display.getHeight();  // deprecated
 

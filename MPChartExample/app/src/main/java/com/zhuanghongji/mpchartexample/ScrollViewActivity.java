@@ -2,6 +2,7 @@
 package com.zhuanghongji.mpchartexample;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.WindowManager;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -15,15 +16,20 @@ import com.zhuanghongji.mpchartexample.notimportant.DemoBase;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+
 public class ScrollViewActivity extends DemoBase {
 
-    private BarChart mChart;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
+    @BindView(R.id.chart1)
+    BarChart mChart;
+
+    @SuppressWarnings("ButterKnifeInjectNotCalled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mChart = (BarChart) findViewById(R.id.chart1);
 
         mChart.getDescription().setEnabled(false);
 
@@ -52,7 +58,7 @@ public class ScrollViewActivity extends DemoBase {
 
     @Override
     protected void initViews() {
-
+        setupToolbar(mToolbar,R.string.ci_26_name,R.string.ci_26_desc,0,true);
     }
 
     @Override
@@ -61,9 +67,7 @@ public class ScrollViewActivity extends DemoBase {
     }
 
     private void setData(int count) {
-        
         ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
-
         for (int i = 0; i < count; i++) {
             float val = (float) (Math.random() * count) + 15;
             yVals.add(new BarEntry(i, (int) val));

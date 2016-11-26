@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.utils.Utils;
 import com.zhuanghongji.mpchartexample.AnotherBarActivity;
@@ -167,7 +168,10 @@ public class MainActivity extends BaseActivity {
                         i = new Intent(mContext, BarChartPositiveNegative.class);
                         break;
                     case 28:
-                        i = new Intent(mContext, RealmMainActivity.class);
+                        Toast.makeText(MainActivity.this,
+                                "有BUG 暂未修复 Thanks",Toast.LENGTH_SHORT).show();
+                        i = null;
+//                        i = new Intent(mContext, RealmMainActivity.class);
                         break;
                     case 29:
                         i = new Intent(mContext, LineChartTime.class);
