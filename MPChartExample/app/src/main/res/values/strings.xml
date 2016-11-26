@@ -6,8 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="tip_end">    —  End  —    </string>
 
-
-
     <!--content item-->
     <string name="ci_0_name">Line Chart</string>
     <string name="ci_0_desc">A simple demonstration of the linechart.</string>
