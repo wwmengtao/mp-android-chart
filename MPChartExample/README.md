@@ -15,6 +15,7 @@ MPExample 这个项目并不是我自己写的，而是 Fork 自 [官方的Examp
 * 直接 [下载MPExample_Release_V1.0.apk](https://github.com/zhuanghongji/MPAndroidChart/blob/master/MPChartExample/MPExample_Release_V1.0.apk?raw=true)
 * “应用宝”正在上线该 Example ,后续可直接在应用宝搜索 MPExample 或扫描二维码进行下载
 * 通过 fir.im 进行下载（见下图）
+<br/>
 ![](https://github.com/zhuanghongji/MPAndroidChart/blob/master/MPChartExample/image/fir.im_download_1.0.png?raw=true)
 
 # **MPExample 截图**
