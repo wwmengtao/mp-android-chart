@@ -96,7 +96,6 @@ public class CombinedChartActivity extends DemoBase {
         });
 
         CombinedData data = new CombinedData();
-
         data.setData(generateLineData());
         data.setData(generateBarData());
         data.setData(generateBubbleData());
@@ -122,15 +121,45 @@ public class CombinedChartActivity extends DemoBase {
 
     @Override
     protected void initEvents() {
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.actionToggleLineValues: {
+                        for (IDataSet set : mChart.getData().getDataSets()) {
+                            if (set instanceof LineDataSet)
+                                set.setDrawValues(!set.isDrawValuesEnabled());
+                        }
 
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionToggleBarValues: {
+                        for (IDataSet set : mChart.getData().getDataSets()) {
+                            if (set instanceof BarDataSet)
+                                set.setDrawValues(!set.isDrawValuesEnabled());
+                        }
+
+                        mChart.invalidate();
+                        break;
+                    }
+                    case R.id.actionRemoveDataSet: {
+                        int rnd = (int) getRandom(mChart.getData().getDataSetCount(), 0);
+                        mChart.getData().removeDataSet(mChart.getData().getDataSetByIndex(rnd));
+                        mChart.getData().notifyDataChanged();
+                        mChart.notifyDataSetChanged();
+                        mChart.invalidate();
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
     }
 
     private LineData generateLineData() {
-
         LineData d = new LineData();
-
-        ArrayList<Entry> entries = new ArrayList<Entry>();
-
+        ArrayList<Entry> entries = new ArrayList<>();
         for (int index = 0; index < itemCount; index++)
             entries.add(new Entry(index + 0.5f, getRandom(15, 5)));
 
@@ -152,13 +181,10 @@ public class CombinedChartActivity extends DemoBase {
     }
 
     private BarData generateBarData() {
-
-        ArrayList<BarEntry> entries1 = new ArrayList<BarEntry>();
-        ArrayList<BarEntry> entries2 = new ArrayList<BarEntry>();
-
+        ArrayList<BarEntry> entries1 = new ArrayList<>();
+        ArrayList<BarEntry> entries2 = new ArrayList<>();
         for (int index = 0; index < itemCount; index++) {
             entries1.add(new BarEntry(0, getRandom(25, 25)));
-
             // stacked
             entries2.add(new BarEntry(0, new float[]{getRandom(13, 12), getRandom(13, 12)}));
         }
@@ -191,11 +217,8 @@ public class CombinedChartActivity extends DemoBase {
     }
 
     protected ScatterData generateScatterData() {
-
         ScatterData d = new ScatterData();
-
-        ArrayList<Entry> entries = new ArrayList<Entry>();
-
+        ArrayList<Entry> entries = new ArrayList<>();
         for (float index = 0; index < itemCount; index += 0.5f)
             entries.add(new Entry(index + 0.25f, getRandom(10, 55)));
 
@@ -210,11 +233,8 @@ public class CombinedChartActivity extends DemoBase {
     }
 
     protected CandleData generateCandleData() {
-
         CandleData d = new CandleData();
-
-        ArrayList<CandleEntry> entries = new ArrayList<CandleEntry>();
-
+        ArrayList<CandleEntry> entries = new ArrayList<>();
         for (int index = 0; index < itemCount; index += 2)
             entries.add(new CandleEntry(index + 1f, 90, 70, 85, 75f));
 
@@ -230,11 +250,8 @@ public class CombinedChartActivity extends DemoBase {
     }
 
     protected BubbleData generateBubbleData() {
-
         BubbleData bd = new BubbleData();
-
-        ArrayList<BubbleEntry> entries = new ArrayList<BubbleEntry>();
-
+        ArrayList<BubbleEntry> entries = new ArrayList<>();
         for (int index = 0; index < itemCount; index++) {
             float y = getRandom(10, 105);
             float size = getRandom(100, 105);
@@ -252,43 +269,4 @@ public class CombinedChartActivity extends DemoBase {
         return bd;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.combined, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.actionToggleLineValues: {
-                for (IDataSet set : mChart.getData().getDataSets()) {
-                    if (set instanceof LineDataSet)
-                        set.setDrawValues(!set.isDrawValuesEnabled());
-                }
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionToggleBarValues: {
-                for (IDataSet set : mChart.getData().getDataSets()) {
-                    if (set instanceof BarDataSet)
-                        set.setDrawValues(!set.isDrawValuesEnabled());
-                }
-
-                mChart.invalidate();
-                break;
-            }
-            case R.id.actionRemoveDataSet: {
-
-                int rnd = (int) getRandom(mChart.getData().getDataSetCount(), 0);
-                mChart.getData().removeDataSet(mChart.getData().getDataSetByIndex(rnd));
-                mChart.getData().notifyDataChanged();
-                mChart.notifyDataSetChanged();
-                mChart.invalidate();
-                break;
-            }
-        }
-        return true;
-    }
 }
